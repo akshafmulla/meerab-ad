@@ -42,9 +42,7 @@ export default {
             return val.replace(/\s/g,'-')
         },
     },
-    computed:{
-
-    }
+    computed:{}
 }
 </script>
 
