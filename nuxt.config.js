@@ -41,9 +41,10 @@ module.exports = {
         // baseURL: 'https://adqapi.nathanhr.ae/',
         // crossDomain: true,
         // https: true,
-        baseURL: 'http://localhost:4800/',
+        baseURL: 'https://api.meerabproperties.com/',
+        //baseURL: 'http://localhost:4800/',
         crossDomain: false,
-        https: false,
+        https: true,
     },
     vuetify: {
         treeShake: true,
