@@ -29,11 +29,11 @@ export default {
     data(){
         return{
             projects: [
-                {location:'Creek Harbour',property_type:'Building',builder_name:'Emaar',rooms:[3,4],banner_img:'/offplans/property_1/banner.png',property_name:'Creek Horizon at Dubai Creek Harbour'},
-                {location:'Arabian Ranches',property_type:'Townhouse',builder_name:'Emaar',rooms:[3,4],banner_img:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {location:'Arabian Ranches',property_type:'Townhouse',builder_name:'Emaar',rooms:[3,4],banner_img:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {location:'Arabian Ranches',property_type:'Villa',builder_name:'Emaar',rooms:[3,4],banner_img:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {location:'Arabian Ranches',property_type:'Townhouse',builder_name:'Emaar',rooms:[3,4],banner_img:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {location:'Creek Harbour',property_type:'Building',builder_name:'Emaar',rooms:[3,4],banner_img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/creek-horizon/2.JPG',property_name:'Creek Horizon at Dubai Creek Harbour'},
+                {location:'Arabian Ranches',property_type:'Townhouse',builder_name:'Emaar',rooms:[3,4],banner_img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {location:'Arabian Ranches',property_type:'Townhouse',builder_name:'Emaar',rooms:[3,4],banner_img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {location:'Arabian Ranches',property_type:'Villa',builder_name:'Emaar',rooms:[3,4],banner_img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {location:'Arabian Ranches',property_type:'Townhouse',builder_name:'Emaar',rooms:[3,4],banner_img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
             ],
         }
     },

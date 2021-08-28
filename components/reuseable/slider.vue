@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-carousel cycle hide-delimiters>
-            <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src" :to="`/properties/offplan/${getName(item.property_name)}`" style="cursor : pointer;">
+            <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src" :to="`/properties/offplan/${getName(item.property_name)}`" cover style="cursor : pointer;">
                 <p class="white--text heading-1 text-right" justify="center"><span class="rounded-lg black pa-4 pt-15">{{item.property_name}}</span></p>
             </v-carousel-item>
         </v-carousel>
@@ -31,8 +31,8 @@ export default {
         return{
             toggle_multiple:1,
             items: [
-                {src:'/offplans/property_1/banner.png',property_name:'Creek Horizon at Dubai Creek Harbour'},
-                {src:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'}
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/creek-horizon/2.JPG',property_name:'Creek Horizon at Dubai Creek Harbour'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'}
             ],
         }
     },

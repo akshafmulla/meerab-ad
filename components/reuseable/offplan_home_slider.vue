@@ -24,9 +24,9 @@ export default {
             toggle_multiple:1,
             items: [
                 {src:'/offplans/property_1/banner.png',property_name:'Creek Horizon at Dubai Creek Harbour'},
-                {src:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {src:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {src:'/offplans/property_2/banner.jpg',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
             ],
         }
     },
