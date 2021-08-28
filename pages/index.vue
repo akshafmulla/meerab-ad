@@ -5,6 +5,19 @@
     <InvestWithUs />
     <OffplanSlider />
     <Partners />
+    <p class="text-center display-1 font-weight-light">CONTACT US</p>
+    <v-layout column align-center justify-center>
+      <!-- <v-container> -->
+        <v-row>
+          <v-col cols="12" sm="12" md="6">
+            <ContactUS />
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <ContactUSAdress />
+          </v-col>
+        </v-row>
+      <!-- </v-container> -->
+    </v-layout>
   </div>
 </template>
 
@@ -14,6 +27,8 @@ import TravelPackage from '~/components/reuseable/travel_package'
 import InvestWithUs from '~/components/reuseable/invest_with_us'
 import Partners from '~/components/reuseable/partners'
 import OffplanSlider from '~/components/reuseable/offplan_home_slider'
+import ContactUS from '~/components/reuseable/contact-us-form'
+import ContactUSAdress from '~/components/reuseable/contact-us-address'
 
 export default {
     data(){
@@ -27,7 +42,9 @@ export default {
         TravelPackage,
         InvestWithUs,
         Partners,
-        OffplanSlider
+        OffplanSlider,
+        ContactUS,
+        ContactUSAdress,
     }
 }
 </script>

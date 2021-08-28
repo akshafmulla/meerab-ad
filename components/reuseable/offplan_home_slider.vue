@@ -4,8 +4,8 @@
         <v-sheet class="mx-auto" elevation="0">
             <v-slide-group cycle class="pa-4" show-arrows>
                 <v-slide-item v-for="(item,i) in items" :key="i" class="text-center">
-                    <v-card  class="ma-4" height="300" width="400" flat :to="`/properties/offplan/${getName(item.property_name)}`" style="cursor : pointer;">
-                        <v-img :src="item.src">
+                    <v-card  class="ma-4" flat :to="`/properties/offplan/${getName(item.property_name)}`" style="cursor : pointer;">
+                        <v-img :src="item.src" height="300" width="320">
                             <p class="mb-0 text-h6 white--text">{{item.property_name}}</p>
                         </v-img>
                     </v-card>
@@ -23,10 +23,13 @@ export default {
         return{
             toggle_multiple:1,
             items: [
-                {src:'/offplans/property_1/banner.png',property_name:'Creek Horizon at Dubai Creek Harbour'},
-                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
-                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/caya/4.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Creek+Horizon/Banner.jpg',property_name:'Creek Horizon at Dubai Creek Harbour'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Caya/Banner.JPG',property_name:'Caya at Arabian Ranches 3 by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Aseel/Banner.JPG',property_name:'Aseel at Arabian Ranches by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Opera+Grand/Banner.JPG',property_name:'Opera Grand at Downtown Dubai by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Creek+Horizon/Banner.jpg',property_name:'Creek Horizon at Dubai Creek Harbour by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Harbour+Gate/Banner.jpg',property_name:'Harbour Gate at Dubai Creek Harbour by Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/Mulberry/Banner.jpg',property_name:'Mulberry at Dubai Hills Estate by Emaar'},
             ],
         }
     },

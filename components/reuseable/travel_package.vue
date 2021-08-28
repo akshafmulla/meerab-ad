@@ -7,7 +7,7 @@
                         <v-col cols="12" sm="12" md="6" class="travelCard pa-8 rounded-xl">
                             <p class="display-1 font-weight-light">VIP TRAVEL PACKAGES FOR INVESTORS</p>
                             <p class="caption font-italic">On your private investment tour, feel inspired to invest in Dubai's finest properties</p>
-                            <v-btn large> More info</v-btn>
+                            <v-btn large @click="redirect" v-if="redirectButton"> More info</v-btn>
                         </v-col>
                         <v-col cols="12" sm="12" md="6" class="pa-8">
                             <p class="caption">The Dubai Investment Visit is a special vacation package for investors looking to profit from Dubai's expanding real estate market.</p>
@@ -32,10 +32,14 @@ export default {
     },
     mounted(){},
     methods:{
-        
+        redirect(){
+            return this.$route.path == '/' ? this.$router.push('/invest-with-us') : ''
+        }
     },
     computed:{
-
+        redirectButton(){
+            return this.$route.path == '/' ? true : false
+        }
     }
 }
 </script>

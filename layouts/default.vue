@@ -1,7 +1,7 @@
 <template>
   <v-app >
     <Header/>
-    <v-main align-center justify-center  class="pt-15">
+    <v-main align-center justify-center  class="pt-9">
       <nuxt />
     </v-main>
     <Footer/>

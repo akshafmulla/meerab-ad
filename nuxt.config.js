@@ -38,13 +38,12 @@ module.exports = {
     ],
     axios: {
         credentials: false,
-        // baseURL: 'https://adqapi.nathanhr.ae/',
-        // crossDomain: true,
-        // https: true,
         baseURL: 'https://api.meerabproperties.com/',
-        //baseURL: 'http://localhost:4800/',
-        crossDomain: false,
+        crossDomain: true,
         https: true,
+        // baseURL: 'http://localhost:4000/',
+        // crossDomain: false,
+        // https: false
     },
     vuetify: {
         treeShake: true,

@@ -1,13 +1,11 @@
 <template>
     <div class="ma-15">
         <p class="text-center display-1 font-weight-light">PARTNERS</p>
-        <v-row class="px-10">
-            <v-col cols="12" sm="6" md="4" lg="2" class="text-center" v-for="(data,index) in invest_cards" :key="index">
-                <v-card flat>
-                    <p class="text-center"><v-icon size="30">{{data.icon}}</v-icon></p>
-                    <v-divider class="mx-10 mb-2 mt-n2"></v-divider>
-                    <p class="font-weight-bold">{{data.name}}</p>
-                    <p class="caption">{{data.desc}}</p>
+        <v-row class="px-10" justify="center">
+            <v-col cols="12" sm="6" md="4" lg="2" class="text-center" v-for="(data,index) in partners" :key="index">
+                <v-card flat class="text-center">
+                    <!-- <p class="text-center"><v-icon size="30">{{data.src}}</v-icon></p> -->
+                    <v-img :src="data.src" max-height="150" max-width="150" :class="index== 0 ? 'mt-n3' : index ==  1 ? 'mt-4' : index == 3 ? 'mt-n2' : index == 4? 'mt-n5' :''"></v-img>
                 </v-card>
             </v-col>
         </v-row>
@@ -20,13 +18,12 @@ export default {
     
     data(){
         return{
-            invest_cards:[
-                {icon:'mdi-home-city-outline',name:'Award Winning Properties',desc:'Landmark hotels and residences in prime locations'},
-                {icon:'mdi-google-earth',name:'Strategic Partners',desc:'key alloances with gloabal hospitality brands'},
-                {icon:'mdi-currency-usd',name:'Returns in US Dollars',desc:' Strong and consistent cash returns pegged to US Dollars'},
-                {icon:'mdi-cash-plus',name:'Investor Benefit',desc:'An incredible array of owner perks and lifestyle benefits'},
-                {icon:'mdi-handshake-outline',name:'Hassle-Free Experience',desc:'A bespoke approach to customer service'},
-                {icon:'mdi-helicopter',name:'Exclusive Tour for Investors',desc:'An investment visit to Dubai to explore our properties'},
+            partners:[
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/builders/damac.png',name:'Damac'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/builders/emaar.png',name:'Emaar'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/builders/sobha.png',name:'Sobha'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/builders/meeras.png',name:'Meeras'},
+                {src:'https://meerabproperties.s3.ap-south-1.amazonaws.com/builders/nakheel.png',name:'Nakheel'},
             ],
         }
     },

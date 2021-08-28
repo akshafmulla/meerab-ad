@@ -1,7 +1,7 @@
 <template>
     <div class="ma-15">
         <p class="text-center display-1 font-weight-light">INVEST WITH MEERAB GROUP</p>
-        <v-row class="px-10">
+        <v-row class="px-10" justify="center">
             <v-col cols="12" sm="6" md="4" lg="2" class="text-center" v-for="(data,index) in invest_cards" :key="index">
                 <v-card flat>
                     <p class="text-center"><v-icon size="30">{{data.icon}}</v-icon></p>
@@ -27,10 +27,9 @@ export default {
         return{
             // sm:true,
             invest_cards:[
-                {icon:'mdi-home-city-outline',name:'Award Winning Properties',desc:'Landmark hotels and residences in prime locations'},
-                {icon:'mdi-google-earth',name:'Strategic Partners',desc:'key alloances with gloabal hospitality brands'},
+                {icon:'mdi-home-city-outline',name:'Award Winning Properties',desc:'Landmark hotel apartment and residences in prime location'},
                 {icon:'mdi-currency-usd',name:'Returns in US Dollars',desc:' Strong and consistent cash returns pegged to US Dollars'},
-                {icon:'mdi-cash-plus',name:'Investor Benefit',desc:'An incredible array of owner perks and lifestyle benefits'},
+                {icon:'mdi-cash-plus',name:'Investor Benefit',desc:'One of the highest ROI in the world'},
                 {icon:'mdi-handshake-outline',name:'Hassle-Free Experience',desc:'A bespoke approach to customer service'},
                 {icon:'mdi-helicopter',name:'Exclusive Tour for Investors',desc:'An investment visit to Dubai to explore our properties'},
             ],

@@ -6,7 +6,7 @@
             </v-btn>
             <v-spacer/>
             <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/')">Home</v-btn>
-            <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/invest-with-us')">Invest With US</v-btn> -->
+            <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/invest-with-us')">Invest With US</v-btn>
             <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/why-dubai')">Why Dubai</v-btn> -->
             <v-menu bottom rounded offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -29,12 +29,17 @@
             <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/about-us')">About Us</v-btn> -->
             <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/contact-us')">Contact Us</v-btn> -->
         </v-app-bar>
+        <Bot />
+
     </header>
 </template>
 
 <script>
+import Bot from '~/components/reuseable/bot'
+
 
 export default {
+    components:{Bot},
     data () {
         return {
             clipped: false,
