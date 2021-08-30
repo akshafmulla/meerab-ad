@@ -1,5 +1,5 @@
 <template>
-    <div class="ma-15">
+    <div class="mx-15 mt-15">
         <p class="text-center display-1 font-weight-light">PARTNERS</p>
         <v-row class="px-10" justify="center">
             <v-col cols="12" sm="6" md="4" lg="2" class="text-center" v-for="(data,index) in partners" :key="index">

@@ -1,6 +1,6 @@
 <template>
-    <div class="pl-15">
-        <v-card class="rounded-xl pa-5" elevation="10" max-width="900">
+    <div class="px-5">
+        <v-card class="rounded-xl pa-5" flat max-width="900" min-height="390">
             <p class="body-1 mb-5 font-weight-bold amber--text text--accent-4 text-center">Enter the below details. We will reach out to you soon!!</p>
             <v-form v-model="valid" ref="form">
                 <v-row >
@@ -35,6 +35,17 @@
                 </v-row>
             </v-form>
         </v-card>
+        <!-- Snackbar -->
+        <v-snackbar
+            v-model="snack"
+            :timeout="3000"
+            :color="snackColor"
+            >
+            {{ snackText }}
+            <template v-slot:action="{ attrs }">
+                <v-btn v-bind="attrs" text @click="snack = false">Close</v-btn>
+            </template>
+        </v-snackbar>
     </div >
 </template>
 
@@ -57,6 +68,9 @@ export default {
             genericRule: [
                 v => !!v || 'This field is Required'
             ],
+            snack:false,
+            snackText:'',
+            snackColor:'',
         }
     },
     mounted(){
@@ -65,15 +79,21 @@ export default {
     methods:{
         sendELead(){
             if(this.$refs.form.validate()){
+                let url = 'https://www.meerabproperties.com'.concat(this.$route.path)
                 let emailBody = {
                     hr_email: 'leads@meerabproperties.com',
                     email: this.contact.email,
                     subjectMsg: 'New Lead',
-                    eMessage: 'Hey,<br/><br/>A new Lead has been received on www.meerabproperties.com.PFB details:<br/><br/>Name : <b>'+ this.contact.first_name+ ' ' + this.contact.last_name+ '</b><br/><br/>Email : <b>'+ this.contact.email+ '</b><br/><br/>Contact No. : <b>'+ this.contact.mobile+'</b><br/><br/>Address : <b>'+ this.contact.address+'</b><br/><br/>Thank You for your time. Have a great day ahead.<br/><br/>Regards,<br/>HR Direct'
+                    eMessage: 'Hey,<br/><br/>A new Lead has been received on www.meerabproperties.com.PFB details:<br/><br/>Name : <b>'+ this.contact.first_name+ ' ' + this.contact.last_name+ '</b><br/><br/>Email : <b>'+ this.contact.email+ '</b><br/><br/>Contact No. : <b>'+ this.contact.mobile+'</b><br/><br/>Address : <b>'+ this.contact.address+'</b><br/><br/>Link : <b>'+ url+'</b><br/><br/>Thank You for your time. Have a great day ahead.<br/><br/>Regards,<br/>HR Direct'
                 }
 
                 console.log(emailBody)
-                this.$axios.$post('properties/send-email/', emailBody).then(res=>console.log(res)).catch(e => console.log(e))
+                this.$axios.$post('properties/send-email/', emailBody).then(res=>{
+                    this.snack = true
+                    this.snackText = 'Details have been sent! We will reach out to you soon!'
+                    this.snackColor = "amber accent-4"
+                    this.$refs.form.reset()
+                }).catch(e => console.log(e))
             }
         }
     },

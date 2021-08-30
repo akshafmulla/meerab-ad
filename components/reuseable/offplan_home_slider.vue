@@ -1,7 +1,7 @@
 <template>
-    <div class="ma-15">
+    <div class="mx-15 py-4">
         <p class="text-center display-1 font-weight-light">OFFPLAN PROJECTS</p>
-        <v-sheet class="mx-auto" elevation="0">
+        <v-sheet class="mx-auto grey lighten-4" elevation="0">
             <v-slide-group cycle class="pa-4" show-arrows>
                 <v-slide-item v-for="(item,i) in items" :key="i" class="text-center">
                     <v-card  class="ma-4" flat :to="`/properties/offplan/${getName(item.property_name)}`" style="cursor : pointer;">

@@ -1,8 +1,7 @@
 <template>
-    <div class="text-left py-15">
+    <div class="text-left">
         <v-card class="rounded-xl pa-5" flat>
-            <p class="caption mb-1 font-weight-bold"><v-icon size="20" class="mt-1" color="amber accent-4 ">mdi-home</v-icon>&emsp;Meerab Properties Office No. 508, Port Saeed, Deira, Dubai</p>
-            <p class="caption mb-3 font-weight-bold">&emsp;&emsp;&nbsp;UAE. P.o Box 96278, ORN 12611. BRN 31302</p>
+            <p class="caption mb-3 font-weight-bold"><v-icon size="20" class="mt-n1" color="amber accent-4 ">mdi-home</v-icon>&emsp;03, 1st Floor, F1RST MOTORS, DUBAI, UAE</p>
             <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="amber accent-4 ">mdi-phone</v-icon>&emsp;+971 0569180786</p>
             <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="amber accent-4 ">mdi-phone-classic</v-icon>&emsp;+971 4 2599266</p>
             <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="amber accent-4 ">mdi-text-box-outline</v-icon>&emsp;+971 4 2595049</p>

@@ -1,13 +1,72 @@
 <template>
 <v-container fluid>
   <div class="">
-    <v-btn class="" small color='white'  dark fixed bottom right fab style="margin-bottom : 150px; !important">
-      <a href="https://www.instagram.com/meerabproperties/" style="text-decoration: none !important;"><v-icon color="pink" size="25">mdi-instagram</v-icon></a> 
-    </v-btn>
-    <v-btn class="" small color='white'  dark fixed bottom right fab style="margin-bottom : 100px; !important">
-      <a href="https://www.facebook.com/Meerab-Properties-102521548828226" style="text-decoration: none !important;"><v-icon color="blue" size="25">mdi-facebook</v-icon></a> 
-    </v-btn>
-    <v-menu class="mr-5" min-width = "300" max-width="500" top v-model="menu" :close-on-click="false" :close-on-content-click="false" :nudge-top="30" offset-x>
+    <v-speed-dial class="mr-n3" v-model="fab1" dark color="green" small fixed right bottom direction="left">
+      <template v-slot:activator>
+          <v-btn v-model="fab1" color="green" fab dark small >
+              <v-icon v-if="fab1"> mdi-close </v-icon>
+              <v-icon v-else> mdi-chat </v-icon>
+          </v-btn>
+      </template>
+      <v-tooltip left color="green">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="" color='white' @click="whatasppRoute"  fab dark small v-bind="attrs" v-on="on">
+            <v-icon color="green" size="25">mdi-whatsapp</v-icon>
+          </v-btn>
+        </template>
+      Whatsapp
+      </v-tooltip>
+      <v-tooltip left color="blue">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
+            <a href="tel:+971565989824" style="text-decoration: none !important;"><v-icon color="blue" size="25">mdi-phone</v-icon></a> 
+          </v-btn>
+        </template>
+      Calling
+      </v-tooltip>
+    </v-speed-dial>
+    <v-speed-dial class="mr-n3" v-model="fab" dark color="blue" small fixed right bottom direction="top" style="margin-bottom : 50px; !important">
+      <template v-slot:activator>
+          <v-btn v-model="fab" color="blue" fab dark small >
+              <v-icon v-if="fab"> mdi-close </v-icon>
+              <v-icon v-else> mdi-robot </v-icon>
+          </v-btn>
+      </template>
+      <v-tooltip left color="pink">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
+            <a href="https://www.instagram.com/meerabproperties/" style="text-decoration: none !important;"><v-icon color="pink" size="25">mdi-instagram</v-icon></a> 
+          </v-btn>
+        </template>
+      Instagram
+      </v-tooltip>
+      <v-tooltip left color="blue">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
+            <a href="https://www.facebook.com/profile.php?id=100072154745739" style="text-decoration: none !important;"><v-icon color="blue" size="25">mdi-facebook</v-icon></a> 
+          </v-btn>
+        </template>
+      Facebook
+      </v-tooltip>
+      <v-tooltip left color="blue">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
+            <a href="https://www.linkedin.com/in/meerab-properties" style="text-decoration: none !important;"><v-icon color="blue" size="25">mdi-linkedin</v-icon></a> 
+          </v-btn>
+        </template>
+      LinkedIn
+      </v-tooltip>
+      <v-tooltip left color="cyan">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
+            <a href="https://twitter.com/MeerabProperty" style="text-decoration: none !important;"><v-icon color="cyan" size="25">mdi-twitter</v-icon></a> 
+          </v-btn>
+        </template>
+      Twitter
+      </v-tooltip>
+    </v-speed-dial>
+    
+    <!-- <v-menu class="mr-5" min-width = "300" max-width="500" top v-model="menu" :close-on-click="false" :close-on-content-click="false" :nudge-top="30" offset-x>
       <template v-slot:activator="{ on }">
         <v-fab-transition>
           <v-btn small v-model="fab" v-on="on" color='white' @click="fab = !fab; menu = false" dark fixed bottom right fab>
@@ -51,7 +110,7 @@
     </v-menu> 
     <v-btn style="margin-bottom : 50px; !important" small color='white'  dark fixed bottom right fab>
       <a href="tel:+971504243914" style="text-decoration: none !important;"><v-icon color="blue" size="20">mdi-phone</v-icon></a> 
-    </v-btn> 
+    </v-btn>  -->
     </div>
   </v-container>
   
@@ -64,11 +123,13 @@
     // components:{VueWhatsappWidget},
     data: () => ({
         fab: false,
+        fab1: false,
+        fab2: false,
         fav: true,
         menu: false,
         message: false,
         hints: true,
-        phone: '971504243914',
+        phone: '971565989824',
         text: "",
         apilink: "",
         isEmailSent: false,
@@ -86,6 +147,9 @@
        
     },
     methods: {
+      whatasppRoute(){
+        window.open('https://wa.me/'+ this.phone + '?text=' + encodeURI("Hello!"), '_blank')
+      },
         closeDialog: function(){
             this.loginDialog = false
             if(this.$store.getters.isAuthenticated){

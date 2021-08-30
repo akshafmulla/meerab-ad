@@ -5,7 +5,7 @@
                 <p class="white--text heading-1 text-right" justify="center"><span class="rounded-lg black pa-4 pt-15">{{item.property_name}}</span></p>
             </v-carousel-item>
         </v-carousel>
-        <div class="mt-n15">
+        <div class="mt-n15" v-if="!windowSize">
             <v-layout column align-center justify-center >
                 <v-card class="searchCard  rounded-lg white mt-n3 px-4" flat >
                     <v-btn-toggle v-model="toggle_multiple" color="yellow darken-1" group>
@@ -46,8 +46,13 @@ export default {
         getName(val){
             return val.replace(/\s/g,'-')
         },
+        
     },
-    computed:{}
+    computed:{
+        windowSize(){
+            return this.$vuetify.breakpoint.mobile ? true : false
+        }
+    }
 }
 </script>
 

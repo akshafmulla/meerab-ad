@@ -1,7 +1,6 @@
 <template>
-    <div class="mt-1">
+    <div class="">
         <BannerImage image_url="https://meerabproperties.s3.ap-south-1.amazonaws.com/vip_package/og.jpg" />
-        <!-- <v-img src="https://meerabproperties.s3.ap-south-1.amazonaws.com/vip_package/og.jpg" cover></v-img> -->
         <TravelPackage />
         <InvestWithUs />
         <p class="text-center display-1 font-weight-light">CONTACT US</p>

@@ -24,9 +24,9 @@
                     </v-list-item> -->
                 </v-list>
             </v-menu>   
-            <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/property-management')">Property Management</v-btn> -->
-            <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/list-property')">List Your Property</v-btn> -->
-            <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/about-us')">About Us</v-btn> -->
+            <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/property-management')">Property Management</v-btn>
+            <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/list-property')">List Your Property</v-btn>
+            <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/about-us')">About Us</v-btn>
             <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/contact-us')">Contact Us</v-btn> -->
         </v-app-bar>
         <Bot />

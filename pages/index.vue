@@ -3,11 +3,13 @@
     <Slider />
     <TravelPackage />
     <InvestWithUs />
-    <OffplanSlider />
+    <div class="grey lighten-4 pt-5">
+      <OffplanSlider />
+    </div>
     <Partners />
-    <p class="text-center display-1 font-weight-light">CONTACT US</p>
-    <v-layout column align-center justify-center>
-      <!-- <v-container> -->
+    <div class="grey lighten-4 pt-5">
+      <p class="text-center display-1 font-weight-light">CONTACT US</p>
+      <v-layout column align-center justify-center>
         <v-row>
           <v-col cols="12" sm="12" md="6">
             <ContactUS />
@@ -16,8 +18,8 @@
             <ContactUSAdress />
           </v-col>
         </v-row>
-      <!-- </v-container> -->
-    </v-layout>
+      </v-layout>
+    </div>
   </div>
 </template>
 
