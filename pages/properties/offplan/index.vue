@@ -9,12 +9,12 @@
                         <p class="pt-4 px-3 font-weight-bold mb-1">{{data.property_name}}</p>
                         <v-row class="px-5">
                             <v-col cols="12" sm='12' md="6">
-                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="pink">mdi-office-building-marker-outline</v-icon>&emsp;{{data.location}}</p>
-                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="pink">mdi-home-city-outline</v-icon>&emsp;{{data.property_type}}</p>
+                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-office-building-marker-outline</v-icon>&emsp;{{data.location}}</p>
+                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-home-city-outline</v-icon>&emsp;{{data.property_type}}</p>
                             </v-col>
                             <v-col cols="12" sm='12' md="6">
-                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="pink">mdi-shield-home-outline</v-icon>&emsp;{{data.builder_name}}</p>
-                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="pink">mdi-warehouse</v-icon>&emsp;<span v-for="(item, i) in data.rooms" :key="i">{{item}} <span v-if="i < data.rooms.length - 1">,&nbsp;</span> </span></p>
+                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-shield-home-outline</v-icon>&emsp;{{data.builder_name}}</p>
+                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-warehouse</v-icon>&emsp;<span v-for="(item, i) in data.rooms" :key="i">{{item}} <span v-if="i < data.rooms.length - 1">,&nbsp;</span> </span></p>
                             </v-col>
                         </v-row>
                     </v-card>

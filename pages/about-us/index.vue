@@ -15,7 +15,7 @@
             <v-container>
                 <v-row class="px-sm-4 px-lg-15">
                     <v-col cols="12" sm="12" md="4" class="my-auto text-center" v-for="(data,index) in cards" :key="index">
-                        <v-icon size="120" color="amber accent 4">{{data.icon}}</v-icon>
+                        <v-icon size="120" color="primary">{{data.icon}}</v-icon>
                         <p class="pt-8 text-center display-1 font-weight-light">{{data.title}}</p>
                         <p>{{data.desc}}</p>
                     </v-col>

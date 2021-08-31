@@ -8,7 +8,8 @@
             <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/')">Home</v-btn>
             <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/invest-with-us')">Invest With US</v-btn>
             <!-- <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/why-dubai')">Why Dubai</v-btn> -->
-            <v-menu bottom rounded offset-y>
+            <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/properties/offplan')">Properties</v-btn>
+            <!-- <v-menu bottom rounded offset-y>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn class="mr-1 white--text text--darken-2" text v-bind="attrs" v-on="on">Properties</v-btn>
                 </template>
@@ -16,14 +17,14 @@
                     <v-list-item @click.prevent="redirect('/properties/offplan')">
                         <v-list-item-title depressed class="white--text text--darken-2" >Offplan</v-list-item-title>
                     </v-list-item>
-                    <!-- <v-list-item @click.prevent="redirect('/properties/buy')">
+                    <v-list-item @click.prevent="redirect('/properties/buy')">
                         <v-list-item-title depressed class="white--text text--darken-2" >Buy</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click.prevent="redirect('/properties/rent')">
                         <v-list-item-title depressed class="white--text text--darken-2" >Rent</v-list-item-title>
-                    </v-list-item> -->
+                    </v-list-item>
                 </v-list>
-            </v-menu>   
+            </v-menu>    -->
             <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/property-management')">Property Management</v-btn>
             <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/list-property')">List Your Property</v-btn>
             <v-btn text small class="mr-1 white--text text--darken-2" @click.prevent="redirect('/about-us')">About Us</v-btn>

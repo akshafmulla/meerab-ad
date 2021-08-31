@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
   <div class="">
-    <v-speed-dial class="mr-n3" v-model="fab1" dark color="green" small fixed right bottom direction="left">
+    <v-speed-dial class="mr-n3" v-model="fab1" dark color="green" small fixed right bottom direction="top">
       <template v-slot:activator>
           <v-btn v-model="fab1" color="green" fab dark small >
               <v-icon v-if="fab1"> mdi-close </v-icon>
@@ -25,7 +25,7 @@
       Calling
       </v-tooltip>
     </v-speed-dial>
-    <v-speed-dial class="mr-n3" v-model="fab" dark color="blue" small fixed right bottom direction="top" style="margin-bottom : 50px; !important">
+    <!-- <v-speed-dial class="mr-n3" v-model="fab" dark color="blue" small fixed right bottom direction="top" style="margin-bottom : 50px; !important">
       <template v-slot:activator>
           <v-btn v-model="fab" color="blue" fab dark small >
               <v-icon v-if="fab"> mdi-close </v-icon>
@@ -64,7 +64,7 @@
         </template>
       Twitter
       </v-tooltip>
-    </v-speed-dial>
+    </v-speed-dial> -->
     
     <!-- <v-menu class="mr-5" min-width = "300" max-width="500" top v-model="menu" :close-on-click="false" :close-on-content-click="false" :nudge-top="30" offset-x>
       <template v-slot:activator="{ on }">

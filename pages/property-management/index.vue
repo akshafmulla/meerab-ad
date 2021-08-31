@@ -10,7 +10,7 @@
         </div>
         <div>
             <v-container>
-                <p class="pt-8 text-center display-1 font-weight-bold amber--text accent-4--text">Rest easy with our team of experienced property managers</p>
+                <p class="pt-8 text-center display-1 font-weight-bold primary--text">Rest easy with our team of experienced property managers</p>
                 <p class="text-center text-h6 font-weight-bold">Meerab Properties Highly Trained Property Management Team Offers Exceptional Services</p>
                 <v-layout column align-center justify-center>
                     <v-row class="pt-5">
@@ -23,7 +23,7 @@
         </div>
         <div class="grey lighten-4">
             <v-container>
-                <p class="pt-8 text-center display-1 font-weight-bold amber--text accent-4--text">Why Hire Meerab Properties Management Services?</p>
+                <p class="pt-8 text-center display-1 font-weight-bold primary--text">Why Hire Meerab Properties Management Services?</p>
                 <p class="px-sm-4 px-lg-15">We are here to make your life easier as a landlord. Employ our services to kickback, relax and just earn the benefits of your investment. With our experienced team available to you 24/7, you can rest stress-free and live your life without any hassle that comes with being a landlord. Your peace of mind is our priority.</p>
                 <v-layout column align-center justify-center>
                     <v-container>

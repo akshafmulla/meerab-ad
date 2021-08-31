@@ -53,7 +53,7 @@ module.exports = {
             light: true,
             themes: {
                 light: {
-                    primary: colors.yellow.darken3,
+                    primary: '#af880a',
                     accent: colors.grey.darken3,
                     secondary: colors.amber.darken3,
                     info: colors.teal.lighten1,

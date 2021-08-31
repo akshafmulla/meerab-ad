@@ -1,7 +1,7 @@
 <template>
     <div class="px-5">
         <v-card class="rounded-xl pa-5" flat max-width="900" min-height="390">
-            <p class="body-1 mb-5 font-weight-bold amber--text text--accent-4 text-center">Enter the below details. We will reach out to you soon!!</p>
+            <p class="body-1 mb-5 font-weight-bold text-center" style="color : #af880a;">Enter the below details. We will reach out to you soon!!</p>
             <v-form v-model="valid" ref="form">
                 <v-row >
                     <v-col class="py-0" cols="12" sm="12" md="6">
@@ -27,7 +27,7 @@
                         <v-text-field dense outlined v-model="contact.address" placeholder="Address" :rules="genericRule"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="12" class="pt-0 text-right">
-                        <v-btn class="primary" dark @click="sendELead">Submit</v-btn>
+                        <v-btn color="#af880a" dark @click="sendELead">Submit</v-btn>
                     </v-col>
                     <!-- <v-col  class="pb-0" cols="12" sm="12" md="12">
                         <v-text-field dense outlined v-model="contact.region" placeholder="Select Region" :rules="genericRule"></v-text-field>
@@ -91,7 +91,7 @@ export default {
                 this.$axios.$post('properties/send-email/', emailBody).then(res=>{
                     this.snack = true
                     this.snackText = 'Details have been sent! We will reach out to you soon!'
-                    this.snackColor = "amber accent-4"
+                    this.snackColor = "primary"
                     this.$refs.form.reset()
                 }).catch(e => console.log(e))
             }

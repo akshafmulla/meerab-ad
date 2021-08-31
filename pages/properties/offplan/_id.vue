@@ -2,7 +2,7 @@
     <div>
         <v-img :src="property.banner_img" cover height="500"></v-img>
         <v-container v-if="property">
-            <p class="pt-5 text-center amber--text text--accent-4 text-h4 mb-4">{{property.property_name}}</p>
+            <p class="pt-5 text-center primary--text text-h4 mb-4">{{property.property_name}}</p>
             <p class="pt-10 black--text text-h5 mb-4 text-decoration-underline">Overview</p>
             <p class="">{{property.property_type}} with <span v-for="(item,i) in property.rooms" :key="i">{{item}} </span> in {{property.property_name}}. Emaar collaborated with world-renowned designers to create the interiors of these spacious {{property.property_type}}. There are two different sets to pick from Bloom and Flora.</p>
             <ul class="ml-5">
