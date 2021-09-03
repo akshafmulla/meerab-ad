@@ -2,7 +2,7 @@
     <div>
         <v-carousel cycle hide-delimiters>
             <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src" :to="`/properties/offplan/${getName(item.property_name)}`" cover style="cursor : pointer;">
-                <p class="white--text heading-1 text-right" justify="center"><span class="rounded-lg black pa-4 pt-15">{{item.property_name}}</span></p>
+                <p class="white--text heading-1 pt-sm-2 pt-md-4 text-right" justify="center"><span class="rounded-lg black pa-4 pt-15">{{item.property_name}}</span></p>
             </v-carousel-item>
         </v-carousel>
         <div class="mt-n15" v-if="!windowSize">
@@ -26,7 +26,7 @@
 <script>
 
 export default {
-    
+    // layout:'dashboard',
     data(){
         return{
             toggle_multiple:1,

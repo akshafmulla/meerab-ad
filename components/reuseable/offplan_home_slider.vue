@@ -1,11 +1,11 @@
 <template>
-    <div class="mx-15 py-4">
+    <div class="mx-sm-n5 mx-lg-15 py-4">
         <p class="text-center display-1 font-weight-light">FEATURED COMMUNITIES</p>
         <v-sheet class="mx-auto grey lighten-4" elevation="0">
             <v-slide-group cycle class="pa-4" show-arrows>
                 <v-slide-item v-for="(item,i) in items" :key="i" class="text-center">
                     <v-card  class="ma-4" flat :to="`/properties/offplan/${getName(item.property_name)}`" style="cursor : pointer;">
-                        <v-img :src="item.src" height="300" width="320">
+                        <v-img :src="item.src" :height="windowSize ? '150' : '300'" :width="windowSize ? '160' : '320'">
                             <p class="mb-0 text-h6 white--text">{{item.property_name}}</p>
                         </v-img>
                     </v-card>
@@ -40,7 +40,9 @@ export default {
         },
     },
     computed:{
-
+        windowSize(){
+            return this.$vuetify.breakpoint.mobile ? true : false
+        }
     }
 }
 </script>

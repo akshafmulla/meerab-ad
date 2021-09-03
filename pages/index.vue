@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-1">
+  <div class="">
     <Slider />
     <TravelPackage />
     <InvestWithUs />

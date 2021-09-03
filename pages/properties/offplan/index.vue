@@ -1,20 +1,20 @@
 <template>
     <v-layout column justify-center class="grey lighten-4">
-        <v-container class="ma-15">
+        <v-container class="pa-5">
             <p class="text-center display-1 font-weight-light">OFFPLAN PROJECTS</p>
             <v-row>
                 <v-col cols="12" sm="12" md="4" xl="3" class="d-flex" v-for="(data,index) in projects" :key="index">
                     <v-card flat class="rounded-lg mx-2" :to="`/properties/offplan/${getName(data.property_name)}`" style="cursor : pointer;" elevation="0">
-                        <v-img :src="data.src" height="275"></v-img>
+                        <v-img :src="data.src" :contain="windowSize" :height="windowSize ? '175' : '275'"></v-img>
                         <p class="pt-4 px-3 font-weight-bold mb-1">{{data.property_name}}</p>
-                        <v-row class="px-5">
-                            <v-col cols="12" sm='12' md="6">
+                        <v-row class="pa-5">
+                            <v-col cols="12" sm='12' md="6" class="py-0">
                                 <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-office-building-marker-outline</v-icon>&emsp;{{data.location}}</p>
                                 <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-home-city-outline</v-icon>&emsp;{{data.property_type}}</p>
                             </v-col>
-                            <v-col cols="12" sm='12' md="6">
+                            <v-col cols="12" sm='12' md="6" class="py-0">
                                 <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-shield-home-outline</v-icon>&emsp;{{data.builder_name}}</p>
-                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-warehouse</v-icon>&emsp;<span v-for="(item, i) in data.rooms" :key="i">{{item}} <span v-if="i < data.rooms.length - 1">,&nbsp;</span> </span></p>
+                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-warehouse</v-icon>&emsp;<span v-for="(item, i) in data.rooms" :key="i">{{item}}<span v-if="i < data.rooms.length - 1">,&nbsp;</span> </span> Rooms</p>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -74,7 +74,9 @@ export default {
         }
     },
     computed:{
-        
+        windowSize(){
+            return this.$vuetify.breakpoint.mobile ? true : false
+        }
     }
 }
 </script>

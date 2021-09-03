@@ -89,9 +89,10 @@ export default {
 
                 console.log(emailBody)
                 this.$axios.$post('properties/send-email/', emailBody).then(res=>{
-                    this.snack = true
-                    this.snackText = 'Details have been sent! We will reach out to you soon!'
-                    this.snackColor = "primary"
+                    // this.snack = true
+                    // this.snackText = 'Details have been sent! We will reach out to you soon!'
+                    // this.snackColor = "primary"
+                    this.$router.push('/thank-you')
                     this.$refs.form.reset()
                 }).catch(e => console.log(e))
             }
