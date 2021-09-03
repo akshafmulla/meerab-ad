@@ -81,7 +81,7 @@ export default {
             if(this.$refs.form.validate()){
                 let url = 'https://www.meerabproperties.com'.concat(this.$route.path)
                 let emailBody = {
-                    hr_email: 'leads@meerabproperties.com',
+                    hr_email: ['vinay.sharma1708@gmail.com','shaikh@meerabproperties.com'],
                     email: this.contact.email,
                     subjectMsg: 'New Lead',
                     eMessage: 'Hey,<br/><br/>A new Lead has been received on www.meerabproperties.com.PFB details:<br/><br/>Name : <b>'+ this.contact.first_name+ ' ' + this.contact.last_name+ '</b><br/><br/>Email : <b>'+ this.contact.email+ '</b><br/><br/>Contact No. : <b>'+ this.contact.mobile+'</b><br/><br/>Address : <b>'+ this.contact.address+'</b><br/><br/>Link : <b>'+ url+'</b><br/><br/>Thank You for your time. Have a great day ahead.<br/><br/>Regards,<br/>HR Direct'

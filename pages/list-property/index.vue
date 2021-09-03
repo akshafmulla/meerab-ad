@@ -2,8 +2,8 @@
     <div>
         <BannerImage image_url="https://meerabproperties.s3.ap-south-1.amazonaws.com/vip_package/List+property+with+us.jpg" />
         <div class="grey lighten-4">
-            <p class="pt-8 text-center display-1 font-weight-light">LIST WITH US</p>
-            <p class="text-center headline font-weight-light primary--text">We will Sell/Rent your property with <b>NO RISKS</b></p>
+            <p class="pt-8 text-center display-1 font-weight-light">LIST YOUR PROPERTY WITH US</p>
+            <p class="text-center font-weight-light primary--text">We will Sell/Rent your property with <b>NO RISKS</b></p>
             <!-- & WE WILL SEL/RENT YOUR PROPERTY WITH NO RISKS -->
             <v-container>
                 <p class="px-sm-4 px-lg-15">Established in 2013, we are a consultancy that prides ourselves in providing hassle-free tailored real estate advice and consultancy for investors and families alike who are looking to find the perfect home. We strive to offer five-star service in each and every step of the process</p>

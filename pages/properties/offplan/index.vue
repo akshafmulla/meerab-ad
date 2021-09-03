@@ -1,10 +1,10 @@
 <template>
-    <v-layout column justify-center >
+    <v-layout column justify-center class="grey lighten-4">
         <v-container class="ma-15">
             <p class="text-center display-1 font-weight-light">OFFPLAN PROJECTS</p>
             <v-row>
                 <v-col cols="12" sm="12" md="4" xl="3" class="d-flex" v-for="(data,index) in projects" :key="index">
-                    <v-card class="rounded-lg mx-2" :to="`/properties/offplan/${getName(data.property_name)}`" style="cursor : pointer;">
+                    <v-card flat class="rounded-lg mx-2" :to="`/properties/offplan/${getName(data.property_name)}`" style="cursor : pointer;" elevation="0">
                         <v-img :src="data.src" height="275"></v-img>
                         <p class="pt-4 px-3 font-weight-bold mb-1">{{data.property_name}}</p>
                         <v-row class="px-5">

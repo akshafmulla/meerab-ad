@@ -1,30 +1,31 @@
 <template>
 <v-container fluid>
   <div class="">
-    <v-speed-dial class="mr-n3" v-model="fab1" dark color="green" small fixed right bottom direction="top">
+    <!-- <v-tooltip left color="green">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn class="" color='white' @click="whatasppRoute"  fab dark small v-bind="attrs" v-on="on">
+          <v-icon color="green" size="25">mdi-whatsapp</v-icon>
+        </v-btn>
+      </template>
+    Whatsapp
+    </v-tooltip>
+    <v-tooltip left color="blue">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
+          <a href="tel:+971589328227" style="text-decoration: none !important;"><v-icon color="blue" size="25">mdi-phone</v-icon></a> 
+        </v-btn>
+      </template>
+    Calling
+    </v-tooltip> -->
+    <!-- <v-speed-dial class="mr-n3" v-model="fab1" dark color="green" small fixed right bottom direction="top">
       <template v-slot:activator>
           <v-btn v-model="fab1" color="green" fab dark small >
               <v-icon v-if="fab1"> mdi-close </v-icon>
               <v-icon v-else> mdi-chat </v-icon>
           </v-btn>
       </template>
-      <v-tooltip left color="green">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="" color='white' @click="whatasppRoute"  fab dark small v-bind="attrs" v-on="on">
-            <v-icon color="green" size="25">mdi-whatsapp</v-icon>
-          </v-btn>
-        </template>
-      Whatsapp
-      </v-tooltip>
-      <v-tooltip left color="blue">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="" color='white'  fab dark small v-bind="attrs" v-on="on">
-            <a href="tel:+971565989824" style="text-decoration: none !important;"><v-icon color="blue" size="25">mdi-phone</v-icon></a> 
-          </v-btn>
-        </template>
-      Calling
-      </v-tooltip>
-    </v-speed-dial>
+      
+    </v-speed-dial> -->
     <!-- <v-speed-dial class="mr-n3" v-model="fab" dark color="blue" small fixed right bottom direction="top" style="margin-bottom : 50px; !important">
       <template v-slot:activator>
           <v-btn v-model="fab" color="blue" fab dark small >
@@ -107,10 +108,13 @@
             </v-layout>  
         </v-container>
       </v-card>  
-    </v-menu> 
-    <v-btn style="margin-bottom : 50px; !important" small color='white'  dark fixed bottom right fab>
-      <a href="tel:+971504243914" style="text-decoration: none !important;"><v-icon color="blue" size="20">mdi-phone</v-icon></a> 
-    </v-btn>  -->
+    </v-menu>  -->
+    <v-btn class="" color='green' @click="whatasppRoute" dark fixed bottom right fab small >
+      <v-icon color="white" size="25">mdi-whatsapp</v-icon>
+    </v-btn>
+    <v-btn style="margin-bottom : 50px; !important" color='blue'  dark fixed bottom right fab small>
+      <a href="tel:+971589328227" style="text-decoration: none !important;"><v-icon color="white" size="20">mdi-phone</v-icon></a> 
+    </v-btn> 
     </div>
   </v-container>
   
@@ -129,7 +133,7 @@
         menu: false,
         message: false,
         hints: true,
-        phone: '971565989824',
+        phone: '971589328227',
         text: "",
         apilink: "",
         isEmailSent: false,
