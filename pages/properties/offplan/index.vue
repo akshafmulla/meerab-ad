@@ -5,7 +5,7 @@
             <v-row>
                 <v-col cols="12" sm="12" md="4" xl="3" class="d-flex" v-for="(data,index) in projects" :key="index">
                     <v-card flat class="rounded-lg mx-2" :to="`/properties/offplan/${getName(data.property_name)}`" style="cursor : pointer;" elevation="0">
-                        <v-img :src="data.src" :contain="windowSize" :height="windowSize ? '175' : '275'"></v-img>
+                        <v-img :src="data.src" cover :height="windowSize ? '175' : '275'"></v-img>
                         <p class="pt-4 px-3 font-weight-bold mb-1">{{data.property_name}}</p>
                         <v-row class="pa-5">
                             <v-col cols="12" sm='12' md="6" class="py-0">

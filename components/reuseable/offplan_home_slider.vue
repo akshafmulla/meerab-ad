@@ -1,6 +1,5 @@
 <template>
-    <div class="mx-sm-n5 mx-lg-15 py-4">
-        <p class="text-center display-1 font-weight-light">FEATURED COMMUNITIES</p>
+    <div class="mx-sm-n5 mx-lg-15">
         <v-sheet class="mx-auto grey lighten-4" elevation="0">
             <v-slide-group cycle class="pa-4" show-arrows>
                 <v-slide-item v-for="(item,i) in items" :key="i" class="text-center">

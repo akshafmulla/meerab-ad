@@ -2,8 +2,13 @@
   <div class="">
     <Slider />
     <TravelPackage />
+    <div class="grey lighten-4 pt-5">
+      <p class="text-center display-1 font-weight-light">OFFPLAN PROPERTIES</p>
+      <OffplanSlider />
+    </div>
     <InvestWithUs />
     <div class="grey lighten-4 pt-5">
+      <p class="text-center display-1 font-weight-light">FEATURED COMMUNITIES</p>
       <OffplanSlider />
     </div>
     <Partners />

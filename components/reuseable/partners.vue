@@ -3,7 +3,7 @@
         <p class="text-center display-1 font-weight-light" style="color : #af880a;">PARTNERS</p>
         <v-row class="px-10" justify="center">
             <v-col cols="12" sm="6" md="4" lg="2" class="text-center" v-for="(data,index) in partners" :key="index"  style="cursor:pointer;">
-                <v-card flat class="text-center" to="/partners"> <!-- :to="`/partners/${data.name}` -->
+                <v-card flat class="text-center" :to="data.name == 'Sobha' ? '/partners' : ''"> <!-- :to="`/partners/${data.name}` -->
                     <v-img :src="data.src" max-height="150" max-width="150" :class="index== 0 ? 'mt-n3' : index ==  1 ? 'mt-4' : index == 3 ? 'mt-n2' : index == 4? 'mt-n5' :''"></v-img>
                 </v-card>
             </v-col>

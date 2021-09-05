@@ -20,7 +20,7 @@
                     <p class="caption mb-3 font-weight-bold">924 US ROUTE 9, SUITE 200 SOUTH AMBOY, NEW JERSEY 08879, US</p>
                 </v-col>
             </v-row>
-            <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="#af880a">mdi-phone</v-icon>&emsp;&emsp;+971 0569180786</p>
+            <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="#af880a">mdi-phone</v-icon>&emsp;&emsp;+971 569180786</p>
             <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="#af880a">mdi-email-outline</v-icon>&emsp;&emsp;info@meerabproperties.ae</p>
             <p class="mb-3 caption font-weight-bold"><v-icon size="20" class="mt-n1" color="#af880a">mdi-calendar-clock-outline</v-icon>&emsp;&emsp;Saturday – Thursday 9:00 : 18:00 UAE </p>   
         </v-card>
