@@ -44,6 +44,6 @@ export default {
   components: {
     Header
   },
-  middleware: ["check-auth", "auth"],
+  // middleware: ["check-auth", "auth"],
 };
 </script>

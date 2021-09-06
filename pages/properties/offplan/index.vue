@@ -1,6 +1,7 @@
 <template>
     <v-layout column justify-center class="grey lighten-4">
         <v-container class="pa-5">
+
             <p class="text-center display-1 font-weight-light">OFFPLAN PROJECTS</p>
             <v-row>
                 <v-col cols="12" sm="12" md="4" xl="3" class="d-flex" v-for="(data,index) in projects" :key="index">
@@ -22,7 +23,6 @@
             </v-row>
         </v-container>
         
-        <!-- <v-btn class="primary" @click="addProperty" dark>Add Project</v-btn> -->
     </v-layout>
 </template>
 
@@ -57,21 +57,7 @@ export default {
         getName(val){
             return val.replace(/\s/g,'-')
         },
-        addProperty(){
-            let projects = {
-                property_name:'Creek Horizon at Dubai Creek Harbour',
-                location:'Creek Harbour',
-                property_type:'Building',
-                builder_name:'Emaar',
-                rooms:[3,4],
-                banner_img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/properties/creek-horizon/2.JPG',
-                property_pics:[],
-                property_details:{}
-            }
-
-            this.$axios.$post('properties/add-item/', projects).then(res=>console.log(res)).catch(e => console.log(e))
-
-        }
+        
     },
     computed:{
         windowSize(){
