@@ -16,7 +16,7 @@
                 <p class="pt-10 black--text text-h5 mb-4 text-decoration-underline">Photo Gallery</p>
                 <v-row justify="center">
                     <v-col cols="12" sm="12" md="4" lg="3" v-for="(img,index) in property.property_pics" :key="index">
-                        <v-img :src="img" max-width="350" max-height="350" @click="loadImg(index)"></v-img>
+                        <v-img :src="img" max-width="350" max-height="190" contain @click="loadImg(index)"></v-img>
                     </v-col>
                 </v-row>
             </div>
@@ -30,9 +30,9 @@
             </v-layout>
         </v-container>
         <!-- image dialog -->
-        <v-dialog v-model="dialog" max-width="900px">
+        <v-dialog v-model="dialog" color="rgb(255, 0, 0, 1)" overlay-opacity="100" max-width="900px">
             <v-card class="" style="overflow-x : hidden">
-                <v-img :src="dialog_image"></v-img>
+                <v-img :src="dialog_image" max-height="550" cover></v-img>
             </v-card>
         </v-dialog>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="pa-5 grey lighten-4">
-        <!-- {{properties}} -->
+        <!-- {{projects}} -->
         <v-container>
             <v-row>
                 <v-col cols="12" sm="8" class="">
@@ -20,6 +20,34 @@
                             <v-text-field outlined dense append-icon="mdi-magnify" v-model="searchProperty" placeholder="Search here..."></v-text-field>
                         </v-card-title>
                         <v-divider class="mt-n3 mx-5"></v-divider>
+                        <v-list two-line class="scroll px-3" style="max-height : 800px;"  v-if="visibleProperties.length > 0">
+                            <template v-for="(data, index) in visibleProperties">
+                                <v-divider :key="data._id" class="grey lighten-3" :inset ="true" v-if="index != 0"></v-divider>
+                                <v-list-item :key="index" @click="selectProperty(data)">
+                                    <v-avatar size="50">
+                                        <img :src="getImage(data.banner_img)" >
+                                    </v-avatar>
+                                    <v-list-item-content class="pl-4">
+                                        <v-list-item-title>{{data.property_name}}</v-list-item-title>
+                                        <v-list-item-subtitle class="pt-1">{{data.community}}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                    <v-list-item-action class="pl-2 text-right">
+                                        <v-list-item-title><span class="grey--text caption"><v-icon class="mt-n1" color="primary" size="15">mdi-warehouse</v-icon>&nbsp;{{data.property_type}}</span> </v-list-item-title>
+                                        <v-chip class="black white--text" small>{{data.developer}}</v-chip>
+                                    </v-list-item-action>
+                                </v-list-item>
+                            </template>
+                        </v-list>
+                        <v-list v-else>
+                            <p class="pa-4 caption">Currently, there are no Properties Listed here!</p>
+                        </v-list>
+                        <v-row justify="center">
+                            <v-col md="6">
+                                <div class="pb-3" style="position: absolute; bottom:0;">
+                                    <v-pagination class="pt-2" v-model="page" :length="Math.ceil(filterText.length/perPage)" :total-visible="5" circle v-if="filterText != undefined"></v-pagination>
+                                </div>
+                            </v-col>
+                        </v-row>
                     </v-card>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
@@ -27,9 +55,60 @@
                         <v-card-title class="">
                             <span class="font-weight-bold mt-n4 primary--text">Property Information</span>
                             <v-spacer></v-spacer>
-                            <v-btn fab x-small @click="toggleEdit = !toggleEdit" :color="!toggleEdit ? 'primary' : 'red'"><v-icon color="white">{{!toggleEdit ? 'mdi-pencil' : 'mdi-close'}}</v-icon></v-btn>
+                            <!-- <v-btn fab x-small @click="toggleEdit = !toggleEdit" :color="!toggleEdit ? 'primary' : 'red'"><v-icon color="white">{{!toggleEdit ? 'mdi-pencil' : 'mdi-close'}}</v-icon></v-btn> -->
                         </v-card-title>
                         <v-divider class="mx-5"></v-divider>
+                        <div class="px-3 scroll" v-if="selectedProject" style="max-height:700px;">
+                            <v-img :src="selectedProject.banner_img" max-height="200"></v-img>
+                            <h3 class="primary--text text-center pt-2">{{selectedProject.property_name}} &emsp;</h3>
+                            <p class="mb-0 text-center"><v-chip class="indigo white--text" x-small>{{selectedProject.property_type}}</v-chip></p>
+                            <p class="mb-1 caption text-center">{{selectedProject.community}} by {{selectedProject.developer}}</p>
+                            <p class="caption text-center"><v-icon class="mt-n1" color="primary" size="15">mdi-warehouse</v-icon>&nbsp;<span v-for="(item, i) in selectedProject.rooms" :key="i">{{item}}<span v-if="i < selectedProject.rooms.length - 1">,&nbsp;</span> </span> Rooms&emsp;&emsp;<v-icon color="green" size="15" class="mt-n1">mdi-cash</v-icon>&nbsp;Starting {{selectedProject.starting_price | amountFormatter}} AED</p>
+                            <h4 class="pl-3 blue-grey--text">Overview</h4>
+                            <v-row class="pl-3 caption" v-for="(data,index) in selectedProject.overview" :key="index">
+                                <v-col cols="12" sm="12" md="12" class="pb-0">    
+                                    <p class="mb-0" v-if="data.type == 'text'">{{data.text}}</p>
+                                    <v-container v-else>
+                                        <v-row>
+                                            <v-col class="py-0" cols="12" sm="12" md="6" v-for="(item,ind) in data.text" :key="ind">
+                                                <ul>
+                                                    <li>{{item.val}}</li>
+                                                </ul>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-col>
+                            </v-row>
+                            <h4 class="py-4 pl-3 blue-grey--text">Property Pictures</h4>
+                            <div class="pl-3" v-for="(data,index) in selectedProject.property_pics" :key="index">
+                                <v-img :src="data.link" max-height="150" max-width="150"/>
+                            </div>
+                            <h4 class="pt-3 pl-3 blue-grey--text">Location</h4>
+                            <v-row class="pl-3 caption" v-for="(data,index) in selectedProject.location" :key="index">
+                                <v-col cols="12" sm="12" md="12" class="pb-0">    
+                                    <p class="mb-0" v-if="data.type == 'text'">{{data.text}}</p>
+                                    <v-container v-else>
+                                        <v-row>
+                                            <v-col class="py-0" cols="12" sm="12" md="6" v-for="(item,ind) in data.text" :key="ind">
+                                                <ul>
+                                                    <li>{{item.val}}</li>
+                                                </ul>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-col>
+                            </v-row>
+                            <h4 class="pt-3 pl-3 blue-grey--text">Ammenities</h4>
+                            <v-container>
+                                <v-row class="pl-3 caption">
+                                    <v-col cols="12" sm="12" md="6" class="pt-0 pb-1"  v-for="(data,index) in selectedProject.ammenities" :key="index">    
+                                        <ul>
+                                            <li>{{data}}</li>
+                                        </ul>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </div>
                     </v-card>
                 </v-col>
             </v-row>
@@ -95,7 +174,7 @@
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Banner Image <span class="red--text">(Size : 1920px * 768px)</span></p>
                                 <span v-if="projects.banner_img != ''">
-                                    <v-btn small class="pink" dark @click="openImage(projects.banner_img)">Open Image</v-btn>&nbsp;
+                                    <v-btn small class="indigo mr-2" dark @click="openImage(projects.banner_img)">Open Banner</v-btn>&nbsp;
                                 </span>
                                 <v-file-input outlined dense placeholder="Attach Banner Image" @change="onUploadBannerImage" v-else>
                                     <template v-slot:selection="{ text }">
@@ -109,10 +188,25 @@
                                 <p class="caption font-weight-bold primary--text mb-0">Property Images</p>
                                 <span v-if="projects.property_pics.length > 0">
                                     <span v-for="(data,index) in projects.property_pics" :key="index">
-                                        <v-btn small class="pink" dark @click="openImage(data.link)">Open Image</v-btn>&nbsp;
+                                        <v-btn small class="pink mr-2" dark @click="openImage(data.link)">Open Images</v-btn>&nbsp;
                                     </span>
                                 </span>
                                 <v-file-input outlined multiple dense placeholder="Attach Multiple Property Image" @change="onUploadPropertyPics" :rules="fileRules" v-else>
+                                    <template v-slot:selection="{ text }">
+                                        <v-chip small label color="primary" >
+                                            {{ text }}
+                                        </v-chip>
+                                    </template>
+                                </v-file-input>
+                            </v-col>
+                            <v-col cols="12" sm="6" class="py-0">
+                                <p class="caption font-weight-bold primary--text mb-0">Floor Plan</p>
+                                <span v-if="projects.floor_plan.length > 0">
+                                    <span v-for="(data,index) in projects.floor_plan" :key="index">
+                                        <v-btn small class="blue mr-2" dark @click="openImage(data.link)">Open Images</v-btn>&nbsp;
+                                    </span>
+                                </span>
+                                <v-file-input outlined multiple dense placeholder="Attach Multiple Floor Plan Image" @change="onUploadFloorPanPics" :rules="fileRules" v-else>
                                     <template v-slot:selection="{ text }">
                                         <v-chip small label color="primary" >
                                             {{ text }}
@@ -192,6 +286,8 @@ export default {
             min: 500,
             max: 50000,
             range:[1000,5000],
+            page:1,
+            perPage:8,
             genericRule: [
                 v => !!v || 'This field is Required'
             ],
@@ -217,27 +313,62 @@ export default {
                 ammenities:[],
                 banner_img:'',
                 property_pics:[],
+                floor_plan:[],
                 property_details:{},
                 property_3d_link:'',
             },
+            selectedProject:{
+                rooms:[],
+                area:[],
+                overview:[],
+                location:[],
+                ammenities:[],
+                property_pics:[],
+                property_details:{}
+            },
+            properties:[],
             developerList:['Emaar','Sobha','Damac','Meeras','Nakheel'],
             propertyTypeList:["Villas","Apartments","Townhouse"],
             roomsList:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
             ammenitiesList:["Kindergarten","2 Cafes","3 restaurants","Clinic","Golf Club","Tennis Courts","State-of-the-art Gym","Bali-inspired Pool","Pool Pavilion","Hammocks","Sun Lounge Terraces","Clubhouse","Barbeque Area","Outdoor Wellness Area","Reception service ","Concierge service ","Smart home technology ","Video security ","Common courtyard ","Common garden ","Meeting room ","Gymnasium ","Steam room ","Sauna ","Jacuzzi ","Infinity Pool ","Overflow pool ","Standard pool ","Pet Friendly ","Games room ","Kids club ","Restaurant Retail area","Reception service ","Smart home technology ","Video security ","Common courtyard ","Common garden ","Meeting room ","Gymnasium ","Steam room ","Sauna ","Jacuzzi ","Standard pool ","Pet Friendly ","Games room ","Kids club ","Restaurant Retail area","ROOFTOP SWIMMING POOL","GYMNASIUM","HEALTH CLUB","KIDS’ CLUB & PLAY AREA","18-HOLE CHAMPIONSHIP GOLF COURSE","DUBAI POLO & EQUESTRIAN CLUB","GATED COMMUNITY","LEISURE CENTRE","KIDS' PLAY AREA","Free Chiller","Central A/C","Gym","Children pool","Basement","CCTV cameras","Covered Parking","Children play area","Landmark view","Lobby in building","Mosque / prayer room","Security","Shared pool","Supermarket nearby","Community center","Gym","Covered Parking","Cycling tracks","Children play area","Jogging tracks","Pets allowed","Shared pool","Supermarket nearby","INFINITY SWIMMING POOL","STATE-OF-THE-ART GYM","CIGAR LOUNGE","LIBRARY","MOVIE THEATRE","GOLF SIMULATOR","GAME ROOM","Gymnasium","Children's play area","Children's Play Area","Restaurants","Restaurants","Shopping mall","Shopping Mall","Beach Access","Beach Access","Jogging Tracks","Jogging Tracks","18-HOLE GOLF COURSE","1,450,000 SQM PARKS & OPEN SPACES","DUBAI HILLS PARK","DUBAI HILLS MALL","CONCIERGE SERVICE","Gym","Shared spa","Fine Dining","Private Pool","Fitness Centre","Dubai fountain","Retail Outlets","Covered Parking","Landscaped Garden","Private Beach Access","Waterfront Living","Resort-Style Amenities","Private Beach Access"],
             link_filename:'',
-            link_url:''
+            link_url:'',
+            uploadBannerImage:'',
+            uploadPropertyImages:[],
+            uploadFloorPlanImages:[],
         }
     },
-    // async asyncData({app, store}) {
-    //     let propertiesData = await app.$axios.$get("/properties/all")
-    //     return {
-    //         properties: propertiesData
-    //     }
-    // },
-    mounted(){
 
+    mounted(){
+        this.getData()
     },
     methods:{
+        
+        async getData(){
+            await this.$axios.$get("properties/all")
+            .then(res =>{
+                this.properties = res
+                this.selectedProject = res[0]
+            }).catch()
+        },
+        openImage(val){
+            window.open(val)
+        },
+        getImage(val){
+            let image = '/home-vector.png'
+            // if(this.properties.length > 0){
+            //     let abc = this.properties.filter(a => a._id == val)
+            //     if(abc.length > 0){
+            //         if(abc[0].hasOwnProperty('image_url')){
+            //             if(abc[0].image_url != '') image = abc[0].image_url
+            //         }
+            //     }
+            // }
+            return val != '' ? val : image
+        },
+        selectProperty(val){
+            this.selectedProject = val
+        },
         pushNew(val,objName){
             let obj = {
                 type: val
@@ -258,23 +389,28 @@ export default {
             objName == 'overview' ? this.projects.overview[index].text.splice(ind,1) : this.projects.location[index].text.splice(ind,1)
         },
         async addProperty(){
-            if(this.$refs.form.validate()){
+            // if(this.$refs.form.validate()){
 
                 this.projects.area = this.range
+
+                await this.attachBannerImage()
+                await this.attachPropertyImages()
+                await this.attachFloorPlanImages()
                 console.log(this.projects)
 
-                // await attachBannerImage()
-                // await attachPropertyImages()
                 // this.$axios.$post('properties/add-item/', this.projects).then(res=>console.log(res)).catch(e => console.log(e))
 
                 this.addNewPropertyDialog = false
-            }
+            // }
         },
         onUploadBannerImage(event) {
             this.uploadBannerImage = event
         },
         onUploadPropertyPics(event) {
             this.uploadPropertyImages = event
+        },
+        onUploadFloorPanPics(event) {
+            this.uploadFloorPlanImages = event
         },
         async attachBannerImage(){
             let upload_meta = {
@@ -307,13 +443,31 @@ export default {
                 }
             }
         },
+        async attachFloorPlanImages(){
+            for(let i=0;i< this.uploadFloorPlanImages.length; i++){
+                if(this.uploadFloorPlanImages[i].name != undefined){
+                    let upload_meta = {
+                        file: this.uploadFloorPlanImages[i],
+                        filename: this.uploadFloorPlanImages[i].name
+                    }
+                    await this.uploadFile(upload_meta)
+                    let attach = {
+                        link:this.link_url,
+                        filename:this.link_filename,
+                        time: new Date()
+                    }
+                    this.projects.floor_plan.push(attach)
+                }
+            }
+        },
         async uploadFile(val) {
+            console.log(val)
             const fd = new FormData();
-            fd.append('a',val.file,val.name)
-            fd.append('b',this.user._id+Date.now()+val.file.name)
+            fd.append('a',val.file)
+            fd.append('b',val.file.name)
             fd.append('folder',"properties/"+this.projects.property_name)
 
-            await this.$axios.$post("/properties/upload-file", fd)
+            await this.$axios.$post("/properties/upload-files", fd)
             .then(res => {
                 this.link_url = res.url
                 this.link_filename = res.name
@@ -322,7 +476,30 @@ export default {
         },
     },
     computed:{
+        filterText() {
+            let properties = this.properties
         
+            if (this.searchProperty) {
+                var s = this.searchProperty;
+                let returnData = _.filter(properties, function (value) {
+                    return (
+                        value.property_name.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
+                        value.community.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
+                        value.developer.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
+                        value.property_type.toLowerCase().indexOf(s.toLowerCase()) > -1
+                    )
+                })
+                this.selectedProject = returnData[0]
+                return returnData
+            }
+            else{
+                this.selectedProject = properties[0]
+                return properties
+            }
+        },
+        visibleProperties(){
+            return this.filterText.slice((this.page - 1)* this.perPage, this.page* this.perPage)
+        },
     }
 }
 </script>

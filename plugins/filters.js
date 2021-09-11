@@ -159,14 +159,16 @@ Vue.filter('firstLetter', function (s) {
 
 // (12345.67).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-Vue.filter('amountFormatter', function(value) {
-    // if (value) {
-    //     if (value == '' || value == null || value == 0) {
-    //         value = 0.00
-    //         return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    //     } else {
-    //         return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    //     }
-    // }
-    return value
+Vue.filter('amountFormatter', function(val) {
+    let num = parseInt(val)
+    if (num >= 1000000000) {
+        return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+     }
+     if (num >= 1000000) {
+        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+     }
+     if (num >= 1000) {
+        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+     }
+     return num.toString();
 })
