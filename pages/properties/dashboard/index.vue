@@ -413,9 +413,10 @@ export default {
             this.uploadFloorPlanImages = event
         },
         async attachBannerImage(){
+            console.log(this.uploadBannerImage)
             let upload_meta = {
-                file: this.uploadPropertyImages,
-                filename: this.uploadPropertyImages.name
+                file: this.uploadBannerImage,
+                filename: this.uploadBannerImage.name
             }
             await this.uploadFile(upload_meta)
             let attach = {
@@ -428,11 +429,13 @@ export default {
         },
         async attachPropertyImages(){
             for(let i=0;i< this.uploadPropertyImages.length; i++){
-                if(this.uploadPropertyImages[i].name != undefined){
+                if(this.uploadPropertyImages[i].name){
+                    console.log(this.uploadPropertyImages[i])
                     let upload_meta = {
                         file: this.uploadPropertyImages[i],
                         filename: this.uploadPropertyImages[i].name
                     }
+                    console.log(upload_meta)
                     await this.uploadFile(upload_meta)
                     let attach = {
                         link:this.link_url,
@@ -445,12 +448,13 @@ export default {
         },
         async attachFloorPlanImages(){
             for(let i=0;i< this.uploadFloorPlanImages.length; i++){
-                if(this.uploadFloorPlanImages[i].name != undefined){
+                if(this.uploadFloorPlanImages[i].name){
+                    console.log(this.uploadFloorPlanImages[i])
                     let upload_meta = {
                         file: this.uploadFloorPlanImages[i],
                         filename: this.uploadFloorPlanImages[i].name
                     }
-                    await this.uploadFile(upload_meta)
+                    // await this.uploadFile(upload_meta)
                     let attach = {
                         link:this.link_url,
                         filename:this.link_filename,
