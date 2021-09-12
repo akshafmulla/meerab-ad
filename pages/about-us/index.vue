@@ -22,6 +22,23 @@
                 </v-row>
             </v-container>
         </div>
+        <div class="">
+            <p class="pt-8 text-center display-1 font-weight-light">OUR TEAM</p>
+            <v-container>
+                <v-row align="center" justify="center">
+                    <v-col cols="12" sm="12" md="3" class="text-center" v-for="(data,index) in items" :key="index">
+                        <v-card class="" flat>
+                            <v-avatar tile size="120">
+                                <v-img cover :src="data.img"></v-img>
+                            </v-avatar>
+                            <h5 class="primary--text pt-3">{{data.name}}</h5>
+                            <p class="mb-0" v-if="data.phone1 != ''"><v-icon size="15" color="primary">mdi-phone</v-icon>&nbsp;{{data.phone1}}</p>
+                            <p class="mb-0" v-if="data.phone2 != ''"><v-icon size="15" color="primary">mdi-phone</v-icon>&nbsp;{{data.phone2}}</p>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </div>
         <div class="px-sm-4 px-lg-15 pt-5">
             <p class="pt-8 text-center display-1 font-weight-light">CONTACT US</p>
             <v-layout column align-center justify-center>
@@ -49,6 +66,10 @@ export default {
                 {icon:'mdi-bullseye-arrow',title:'Mission',desc:'Our mission is to provide Dubai with a real estate agency that listens to client needs along with a loyal customer base, professional team and sterling reputation.'},
                 {icon:'mdi-telescope',title:'Vision',desc:'To be the choice for anyone considering buying, selling or renting a property in Dubai and provide service to an outstanding standard, building key relationships.'},
                 {icon:'mdi-scale-balance',title:'Values',desc:'We will show integrity, carry out our job with passion, respect one another, show the utmost professionalism and work as a team to meet our clients’ needs.'},
+            ],
+            items:[
+                {name:'Elvira Gog',img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/agents/Elvira+Gog.jpeg',phone1:'+79219149272',phone2:'+971521903917'},
+                {name:'Victoria Pototskaya',img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/agents/Victoria+Pototskaya.jpeg',phone1:'+7 985 926-91-91',phone2:''},
             ]
         }
     },

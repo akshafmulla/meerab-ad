@@ -1,14 +1,13 @@
 <template>
     <div class="pa-5 grey lighten-4">
-        <!-- {{projects}} -->
         <v-container>
             <v-row>
                 <v-col cols="12" sm="8" class="">
                 <h3 class="headline font-weight-light primary--text">PROPERTIES <span class="display-1 font-weight-bold primary--text">&nbsp;CENTRAL</span></h3>
                 </v-col>
                 <v-col cols="12" sm="4" class="text-right">
-                    <v-btn class="primary" @click="addNewPropertyDialog = true" dark>
-                        <v-icon>mdi-plus</v-icon>&nbsp;Add Project</v-btn>
+                    <v-btn class="purple" @click="showBanner = true" dark>Show Home Banner</v-btn>
+                    <v-btn class="primary" @click="addNewPropertyDialog = true" dark><v-icon>mdi-plus</v-icon>&nbsp;Add Project</v-btn>
                 </v-col>
             </v-row>
             <v-row>
@@ -56,6 +55,8 @@
                             <span class="font-weight-bold mt-n4 primary--text">Property Information</span>
                             <v-spacer></v-spacer>
                             <!-- <v-btn fab x-small @click="toggleEdit = !toggleEdit" :color="!toggleEdit ? 'primary' : 'red'"><v-icon color="white">{{!toggleEdit ? 'mdi-pencil' : 'mdi-close'}}</v-icon></v-btn> -->
+                            <v-btn x-small class="indigo white--text" @click="updatePropertyToBanner(true)" v-if="selectedProject && selectedProject.home_banner_highlight == false">Add to Banner</v-btn>
+                            <v-btn x-small class="red white--text" @click="updatePropertyToBanner(false)"  v-else-if="selectedProject && selectedProject.home_banner_highlight == true">Remove from Banner</v-btn>
                         </v-card-title>
                         <v-divider class="mx-5"></v-divider>
                         <div class="px-3 scroll" v-if="selectedProject" style="max-height:700px;">
@@ -80,9 +81,11 @@
                                 </v-col>
                             </v-row>
                             <h4 class="py-4 pl-3 blue-grey--text">Property Pictures</h4>
-                            <div class="pl-3" v-for="(data,index) in selectedProject.property_pics" :key="index">
-                                <v-img :src="data.link" max-height="150" max-width="150"/>
-                            </div>
+                            <v-row class="pl-3">
+                                <v-col cols="12" sm="12" md="3"  v-for="(data,index) in selectedProject.property_pics" :key="index">
+                                    <v-img :src="data.link" max-height="150" max-width="150"/>
+                                </v-col>
+                            </v-row>
                             <h4 class="pt-3 pl-3 blue-grey--text">Location</h4>
                             <v-row class="pl-3 caption" v-for="(data,index) in selectedProject.location" :key="index">
                                 <v-col cols="12" sm="12" md="12" class="pb-0">    
@@ -112,7 +115,8 @@
                     </v-card>
                 </v-col>
             </v-row>
-       </v-container>
+        </v-container>
+
 
         <!-- Add New Property -->
         <v-dialog v-model="addNewPropertyDialog" fullscreen hide-overlay transition="dialog-bottom-transition" >
@@ -206,7 +210,7 @@
                                         <v-btn small class="blue mr-2" dark @click="openImage(data.link)">Open Images</v-btn>&nbsp;
                                     </span>
                                 </span>
-                                <v-file-input outlined multiple dense placeholder="Attach Multiple Floor Plan Image" @change="onUploadFloorPanPics" :rules="fileRules" v-else>
+                                <v-file-input outlined multiple dense placeholder="Attach Multiple Floor Plan Image" @change="onUploadFloorPanPics" v-else>
                                     <template v-slot:selection="{ text }">
                                         <v-chip small label color="primary" >
                                             {{ text }}
@@ -274,6 +278,54 @@
                 </v-container>
             </v-card>
         </v-dialog>
+
+        <!-- Show Banner -->
+        <v-dialog v-model="showBanner" max-width="900px">
+            <v-card class="" style="overflow-x : hidden" min-height="400">
+                <v-toolbar dark color="primary" >
+                    <v-toolbar-title>Home Banner Properties</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn icon dark @click="showBanner = false">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-container>
+                    <v-list two-line class="scroll px-3" style="max-height : 800px;"  v-if="fetchBannerProperties.length > 0">
+                        <template v-for="(data, index) in fetchBannerProperties">
+                            <v-divider :key="data._id" class="grey lighten-3" :inset ="true" v-if="index != 0"></v-divider>
+                            <v-list-item :key="index" @click="selectProperty(data)">
+                                <v-avatar size="50">
+                                    <img :src="getImage(data.banner_img)" >
+                                </v-avatar>
+                                <v-list-item-content class="pl-4">
+                                    <v-list-item-title>{{data.property_name}}</v-list-item-title>
+                                    <v-list-item-subtitle class="pt-1">{{data.community}}</v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-action class="pl-2 text-right">
+                                    <v-list-item-title><span class="grey--text caption"><v-icon class="mt-n1" color="primary" size="15">mdi-warehouse</v-icon>&nbsp;{{data.property_type}}</span> </v-list-item-title>
+                                    <v-chip class="black white--text" small>{{data.developer}}</v-chip>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </template>
+                    </v-list>
+                    <v-list v-else>
+                        <p class="pa-4 caption">Currently, there are no Properties Listed here!</p>
+                    </v-list>
+                    <!-- {{fetchBannerProperties}} -->
+                </v-container>
+            </v-card>
+        </v-dialog>
+        <!-- Dialog overlay -->
+        <v-row justify="center">
+            <v-dialog v-model="dialog_overlay" persistent max-width="400">
+                <v-card color="primary" dark class="pa-10">
+                    <v-card-text>
+                        <p>Adding the Property. Hang in Tight</p> 
+                        <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
+        </v-row>
     </div>
 </template>
 
@@ -281,6 +333,8 @@
 export default {
     data(){
         return{
+            showBanner:false,
+            dialog_overlay:false,
             toggleEdit:false,
             searchProperty:'',
             min: 500,
@@ -316,6 +370,7 @@ export default {
                 floor_plan:[],
                 property_details:{},
                 property_3d_link:'',
+                home_banner_highlight : false
             },
             selectedProject:{
                 rooms:[],
@@ -389,8 +444,8 @@ export default {
             objName == 'overview' ? this.projects.overview[index].text.splice(ind,1) : this.projects.location[index].text.splice(ind,1)
         },
         async addProperty(){
-            // if(this.$refs.form.validate()){
-
+            if(this.$refs.form.validate()){
+                this.dialog_overlay = true
                 this.projects.area = this.range
 
                 await this.attachBannerImage()
@@ -398,34 +453,47 @@ export default {
                 await this.attachFloorPlanImages()
                 console.log(this.projects)
 
-                // this.$axios.$post('properties/add-item/', this.projects).then(res=>console.log(res)).catch(e => console.log(e))
-
-                this.addNewPropertyDialog = false
-            // }
+                this.$axios.$post('properties/add-item/', this.projects)
+                .then(async res=>{
+                    await this.getData()
+                    this.dialog_overlay = false
+                    this.addNewPropertyDialog = false
+                }).catch(e => console.log(e))
+            }
+        },
+        updatePropertyToBanner(flag){
+            this.selectedProject.home_banner_highlight = flag
+            this.$axios.$put('properties/update/'+this.selectedProject._id, this.selectedProject)
+            .then(async res=>{
+                console.log(res)
+            }).catch(e => console.log(e))
         },
         onUploadBannerImage(event) {
             this.uploadBannerImage = event
         },
         onUploadPropertyPics(event) {
             this.uploadPropertyImages = event
+            console.log(this.uploadPropertyImages)
         },
         onUploadFloorPanPics(event) {
             this.uploadFloorPlanImages = event
         },
         async attachBannerImage(){
             console.log(this.uploadBannerImage)
-            let upload_meta = {
-                file: this.uploadBannerImage,
-                filename: this.uploadBannerImage.name
+            if(this.uploadBannerImage.name){
+                let upload_meta = {
+                    file: this.uploadBannerImage,
+                    filename: this.uploadBannerImage.name
+                }
+                await this.uploadFile(upload_meta)
+                let attach = {
+                    link:this.link_url,
+                    filename:this.link_filename,
+                    time: new Date()
+                }
+                this.projects.banner_img = this.link_url
+                this.projects.property_pics.push(attach)
             }
-            await this.uploadFile(upload_meta)
-            let attach = {
-                link:this.link_url,
-                filename:this.link_filename,
-                time: new Date()
-            }
-            this.projects.banner_img = this.link_url
-            this.projects.property_pics.push(attach)
         },
         async attachPropertyImages(){
             for(let i=0;i< this.uploadPropertyImages.length; i++){
@@ -454,7 +522,7 @@ export default {
                         file: this.uploadFloorPlanImages[i],
                         filename: this.uploadFloorPlanImages[i].name
                     }
-                    // await this.uploadFile(upload_meta)
+                    await this.uploadFile(upload_meta)
                     let attach = {
                         link:this.link_url,
                         filename:this.link_filename,
@@ -504,6 +572,9 @@ export default {
         visibleProperties(){
             return this.filterText.slice((this.page - 1)* this.perPage, this.page* this.perPage)
         },
+        fetchBannerProperties(){
+            return this.properties.filter(a => a.home_banner_highlight == true)
+        }
     }
 }
 </script>
