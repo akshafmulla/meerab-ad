@@ -138,7 +138,7 @@
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Community</p>
-                                <v-text-field dense outlined v-model="projects.community" placeholder="Community" :rules="genericRule"></v-text-field>
+                                <v-select :items="communities" item-text="community_name" item-value="community_name"  dense outlined v-model="projects.community" placeholder="Community" :rules="genericRule"></v-select>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Developer</p>
@@ -391,6 +391,7 @@ export default {
             uploadBannerImage:'',
             uploadPropertyImages:[],
             uploadFloorPlanImages:[],
+            communities:[]
         }
     },
 
@@ -404,6 +405,11 @@ export default {
             .then(res =>{
                 this.properties = res
                 this.selectedProject = res[0]
+            }).catch()
+
+            await this.$axios.$get("communities/all")
+            .then(res =>{
+                this.communities = res
             }).catch()
         },
         openImage(val){
