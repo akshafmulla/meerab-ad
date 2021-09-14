@@ -137,8 +137,12 @@
                                 <v-text-field dense outlined v-model="projects.property_name" placeholder="Property Name" :rules="genericRule"></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
+                                <p class="caption font-weight-bold primary--text mb-0">Neighbourhood</p>
+                                <v-autocomplete :items="neighbourhoodList"  dense outlined v-model="projects.neighbourhood" placeholder="Neighbourhood" :rules="genericRule"></v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Community</p>
-                                <v-select :items="communities" item-text="community_name" item-value="community_name"  dense outlined v-model="projects.community" placeholder="Community" :rules="genericRule"></v-select>
+                                <v-autocomplete :items="communities" item-text="community_name" item-value="community_name"  dense outlined v-model="projects.community" placeholder="Community"></v-autocomplete>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Developer</p>
@@ -385,6 +389,7 @@ export default {
             developerList:['Emaar','Sobha','Damac','Meeras','Nakheel'],
             propertyTypeList:["Villas","Apartments","Townhouse"],
             roomsList:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            neighbourhoodList:["Area","Akoya Oxygen","Al Barari","Al Barsha","Al Barsha 2","Al Barsha 3","Al Barsha South","Al Barsha South 4","Al Furjan","Al Garhoud","Al Karama","Al Khail Heights","Al Khawaneej","Al Nahda","Al Quoz","Al quoz 4","Al Qusais","Al satwa","Al sufouh","Al wasl","Arabian Ranches","Arabian Ranches 1","Arabian Ranches 2","Arabian Ranches 3","Arjan","Barsha heights (Tecom)","Bluewaters Island","Bur Dubai","Business Bay","City Walk","Creek Beach","Damac Hills","Deira","Discovery Gardens","Duabi Creek Harbour (DCH)","Duabi Downtown","Duabi Hills Estate (DHE)","Duabi Land","Duabi Marina","Duabi South","Dubai Festival City (DFC)","Dubai International Financial Centre(DIFC)","Dubai Investment Park (DIP)","Dubai Media City","Dubai Science Park","Dubai Silicon Oasis (DSO)","Dubai Sports City","Elan, Tilal Al Ghaf","Emaar Beachfront","Emaar South","Emirates Hills","Emirates Living","IMPZ","International City","Jebel Ali","Jumeirah","Jumeirah Bay Island","Jumeirah Beach Residence (JBR)","Jumeirah Golf Estates (JGE)","Jumeirah Island","Jumeirah Lake Towers (JLT)","Jumeirah Park","Jumeirah Village Circle (JVC)","Jumeirah Village Triangle(JVT)","La Mer","Liwan","Madinat Jumeirah Living (MJL), Umm Suqueim","Majan","Meadows","Meydan","Mina Rashid","Mira","Mira 1","Mira 4","Mira oasis","Mira oasis 1","Mira oasis 2","Mira oasis 3","Mirdif","Mohammad Bin Rashid Al Maktoum (MBR)","Mohammad Bin Zayed Road","Motor City","Mudon","Nad Al Sheba","Nshama Town Square","Old Town","Palm Jumeirah","Port Saeed","Queue Point","Saadiyat Island","Sheikh Zayed Road","Sobha Hartland MBR","The Greens","The Hills","The Lagoons","The Lakes","The Springs","The Valley","The Views","The Villa","The World Islands","Umm Ramool","Umm Suqueim","Villanova","World Trade Centre","Zabeel"],
             ammenitiesList:["Kindergarten","2 Cafes","3 restaurants","Clinic","Golf Club","Tennis Courts","State-of-the-art Gym","Bali-inspired Pool","Pool Pavilion","Hammocks","Sun Lounge Terraces","Clubhouse","Barbeque Area","Outdoor Wellness Area","Reception service ","Concierge service ","Smart home technology ","Video security ","Common courtyard ","Common garden ","Meeting room ","Gymnasium ","Steam room ","Sauna ","Jacuzzi ","Infinity Pool ","Overflow pool ","Standard pool ","Pet Friendly ","Games room ","Kids club ","Restaurant Retail area","Reception service ","Smart home technology ","Video security ","Common courtyard ","Common garden ","Meeting room ","Gymnasium ","Steam room ","Sauna ","Jacuzzi ","Standard pool ","Pet Friendly ","Games room ","Kids club ","Restaurant Retail area","ROOFTOP SWIMMING POOL","GYMNASIUM","HEALTH CLUB","KIDS’ CLUB & PLAY AREA","18-HOLE CHAMPIONSHIP GOLF COURSE","DUBAI POLO & EQUESTRIAN CLUB","GATED COMMUNITY","LEISURE CENTRE","KIDS' PLAY AREA","Free Chiller","Central A/C","Gym","Children pool","Basement","CCTV cameras","Covered Parking","Children play area","Landmark view","Lobby in building","Mosque / prayer room","Security","Shared pool","Supermarket nearby","Community center","Gym","Covered Parking","Cycling tracks","Children play area","Jogging tracks","Pets allowed","Shared pool","Supermarket nearby","INFINITY SWIMMING POOL","STATE-OF-THE-ART GYM","CIGAR LOUNGE","LIBRARY","MOVIE THEATRE","GOLF SIMULATOR","GAME ROOM","Gymnasium","Children's play area","Children's Play Area","Restaurants","Restaurants","Shopping mall","Shopping Mall","Beach Access","Beach Access","Jogging Tracks","Jogging Tracks","18-HOLE GOLF COURSE","1,450,000 SQM PARKS & OPEN SPACES","DUBAI HILLS PARK","DUBAI HILLS MALL","CONCIERGE SERVICE","Gym","Shared spa","Fine Dining","Private Pool","Fitness Centre","Dubai fountain","Retail Outlets","Covered Parking","Landscaped Garden","Private Beach Access","Waterfront Living","Resort-Style Amenities","Private Beach Access"],
             link_filename:'',
             link_url:'',
@@ -464,6 +469,7 @@ export default {
                     await this.getData()
                     this.dialog_overlay = false
                     this.addNewPropertyDialog = false
+                    this.$router.go()
                 }).catch(e => console.log(e))
             }
         },

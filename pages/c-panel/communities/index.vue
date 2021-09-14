@@ -116,6 +116,7 @@ export default {
                     await this.getData()
                     this.dialog_overlay = false
                     this.addNewCommunityDialog = false
+                    this.$router.go()
                 }).catch(e => console.log(e))
             }
         },
