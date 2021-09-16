@@ -27,7 +27,7 @@
             <v-container>
                 <v-row align="center" justify="center">
                     <v-col cols="12" sm="12" md="3" xl="2" v-for="(data,index) in agents" :key="index">
-                        <v-card class="pb-5 rounded-xl" flat>
+                        <v-card class="pb-5 rounded-xl" flat min-height="330">
                             <v-img :src="data.agent_pic" contain height="200"></v-img>
                             <p class="pt-3 text-center px-3 mb-0 font-weight-bold">{{data.agent_name}}</p>
                             <p class="caption mb-1 text-center px-3 font-weight-bold caption">{{data.agent_info.designation}}</p>
