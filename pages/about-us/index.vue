@@ -22,18 +22,18 @@
                 </v-row>
             </v-container>
         </div>
-        <div class="">
+        <div class="grey lighten-4">
             <p class="pt-8 text-center display-1 font-weight-light">OUR TEAM</p>
             <v-container>
                 <v-row align="center" justify="center">
-                    <v-col cols="12" sm="12" md="3" class="text-center" v-for="(data,index) in items" :key="index">
-                        <v-card class="" flat>
-                            <v-avatar tile size="120">
-                                <v-img cover :src="data.img"></v-img>
-                            </v-avatar>
-                            <h5 class="primary--text pt-3">{{data.name}}</h5>
-                            <p class="mb-0" v-if="data.phone1 != ''"><v-icon size="15" color="primary">mdi-phone</v-icon>&nbsp;{{data.phone1}}</p>
-                            <p class="mb-0" v-if="data.phone2 != ''"><v-icon size="15" color="primary">mdi-phone</v-icon>&nbsp;{{data.phone2}}</p>
+                    <v-col cols="12" sm="12" md="3" xl="2" v-for="(data,index) in agents" :key="index">
+                        <v-card class="pb-5 rounded-xl" flat>
+                            <v-img :src="data.agent_pic" contain height="200"></v-img>
+                            <p class="pt-3 text-center px-3 mb-0 font-weight-bold">{{data.agent_name}}</p>
+                            <p class="caption mb-1 text-center px-3 font-weight-bold caption">{{data.agent_info.designation}}</p>
+                            <div v-for="(item,ind) in data.agent_info.phone_number" :key="ind" class="text-center">
+                                <p class="mb-0 caption blue-grey--text" v-if="item !=''"><v-icon color="indigo" size="20" class="">mdi-phone</v-icon>{{item}}</p>
+                            </div>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -67,17 +67,19 @@ export default {
                 {icon:'mdi-telescope',title:'Vision',desc:'To be the choice for anyone considering buying, selling or renting a property in Dubai and provide service to an outstanding standard, building key relationships.'},
                 {icon:'mdi-scale-balance',title:'Values',desc:'We will show integrity, carry out our job with passion, respect one another, show the utmost professionalism and work as a team to meet our clients’ needs.'},
             ],
-            items:[
-                {name:'Elvira Gog',img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/agents/Elvira+Gog.jpeg',phone1:'+79219149272',phone2:'+971521903917'},
-                {name:'Victoria Pototskaya',img:'https://meerabproperties.s3.ap-south-1.amazonaws.com/agents/Victoria+Pototskaya.jpeg',phone1:'+7 985 926-91-91',phone2:''},
-            ]
+            agents:[]
         }
     },
     mounted(){
-
+        this.getData()
     },
     methods:{
-
+        async getData(){
+            await this.$axios.$get("teams/all")
+            .then(res =>{
+                this.agents = res
+            }).catch()
+        },
     },
     computed:{
         
