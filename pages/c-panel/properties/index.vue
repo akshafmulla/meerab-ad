@@ -2,10 +2,10 @@
     <div class="pa-5 grey lighten-4">
         <v-container>
             <v-row>
-                <v-col cols="12" sm="8" class="">
+                <v-col cols="12" sm="4" class="">
                 <h3 class="headline font-weight-light primary--text">PROPERTIES <span class="display-1 font-weight-bold primary--text">&nbsp;CENTRAL</span></h3>
                 </v-col>
-                <v-col cols="12" sm="4" class="text-right">
+                <v-col cols="12" sm="8" class="text-right">
                     <v-btn class="purple" @click="showBanner = true" dark>Show Home Banner</v-btn>
                     <v-btn class="primary" @click="addNewPropertyDialog = true" dark><v-icon>mdi-plus</v-icon>&nbsp;Add Project</v-btn>
                 </v-col>
@@ -22,13 +22,13 @@
                         <v-list two-line class="scroll px-3" style="max-height : 800px;"  v-if="visibleProperties.length > 0">
                             <template v-for="(data, index) in visibleProperties">
                                 <v-divider :key="data._id" class="grey lighten-3" :inset ="true" v-if="index != 0"></v-divider>
-                                <v-list-item :key="index" @click="selectProperty(data)">
+                                <v-list-item :key="index" @click="selectProperty(data)" :style="getUserStatusColor(data.property_status)">
                                     <v-avatar size="50">
                                         <img :src="getImage(data.banner_img)" >
                                     </v-avatar>
                                     <v-list-item-content class="pl-4">
                                         <v-list-item-title>{{data.property_name}}</v-list-item-title>
-                                        <v-list-item-subtitle class="pt-1">{{data.community}}</v-list-item-subtitle>
+                                        <v-list-item-subtitle class="pt-1">{{data.community}}&emsp;<v-chip x-small :color="chipColor(data.status_type)" class="white--text">{{data.status_type}}</v-chip></v-list-item-subtitle>
                                     </v-list-item-content>
                                     <v-list-item-action class="pl-2 text-right">
                                         <v-list-item-title><span class="grey--text caption"><v-icon class="mt-n1" color="primary" size="15">mdi-warehouse</v-icon>&nbsp;{{data.property_type}}</span> </v-list-item-title>
@@ -138,7 +138,7 @@
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Neighbourhood</p>
-                                <v-autocomplete :items="neighbourhoodList"  dense outlined v-model="projects.neighbourhood" placeholder="Neighbourhood" :rules="genericRule"></v-autocomplete>
+                                <v-autocomplete :items="configurations[0].neighbourhoodList"  dense outlined v-model="projects.neighbourhood" placeholder="Neighbourhood" :rules="genericRule"></v-autocomplete>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Community</p>
@@ -146,7 +146,7 @@
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Developer</p>
-                                <v-select :items="developerList" dense outlined v-model="projects.developer" placeholder="Developer" :rules="genericRule"></v-select>
+                                <v-select :items="configurations[0].developerList" dense outlined v-model="projects.developer" placeholder="Developer" :rules="genericRule"></v-select>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Starting Price</p>
@@ -161,6 +161,14 @@
                                 <v-select :items="propertyTypeList" dense outlined v-model="projects.property_type" placeholder="Property Type" :rules="genericRule"></v-select>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
+                                <p class="caption font-weight-bold primary--text mb-0">Status Type</p>
+                                <v-select :items="statusTypeList" dense outlined v-model="projects.status_type" placeholder="Status Type" :rules="genericRule"></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="6" class="py-0">
+                                <p class="caption font-weight-bold primary--text mb-0">Property Status</p>
+                                <v-select :items="propertyStatusList" dense outlined v-model="projects.property_status" placeholder="Property Status" :rules="genericRule"></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Area Range</p>
                                 <v-range-slider v-model="range" :max="max" :min="min" hide-details class="align-center">
                                     <template v-slot:prepend>
@@ -173,7 +181,7 @@
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">Ammenities</p>
-                                <v-autocomplete :items="ammenitiesList" multiple dense outlined v-model="projects.ammenities" placeholder="Ammenities" :rules="fileRules"></v-autocomplete>
+                                <v-autocomplete :items="configurations[0].ammenitiesList" multiple dense outlined v-model="projects.ammenities" placeholder="Ammenities" :rules="fileRules"></v-autocomplete>
                             </v-col>
                             <v-col cols="12" sm="6" class="py-0">
                                 <p class="caption font-weight-bold primary--text mb-0">3D Property Link</p>
@@ -345,7 +353,7 @@ export default {
             max: 50000,
             range:[1000,5000],
             page:1,
-            perPage:8,
+            perPage:9,
             genericRule: [
                 v => !!v || 'This field is Required'
             ],
@@ -361,6 +369,8 @@ export default {
                 starting_price:0,
                 rooms:[],
                 property_type:'',
+                status_type:'Offplan',
+                property_status:'Active',
                 area:[],
                 overview:[
                     {text:'',type:'text'}
@@ -386,17 +396,21 @@ export default {
                 property_details:{}
             },
             properties:[],
-            developerList:['Emaar','Sobha','Damac','Meeras','Nakheel'],
+            developerList:["Emaar","Sobha","Damac","Meeras","Nakheel"],
             propertyTypeList:["Villas","Apartments","Townhouse"],
+            statusTypeList:["Ready","Rental","Offplan"],
+            propertyStatusList:['Active','Inactive'],
             roomsList:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-            neighbourhoodList:["Area","Akoya Oxygen","Al Barari","Al Barsha","Al Barsha 2","Al Barsha 3","Al Barsha South","Al Barsha South 4","Al Furjan","Al Garhoud","Al Karama","Al Khail Heights","Al Khawaneej","Al Nahda","Al Quoz","Al quoz 4","Al Qusais","Al satwa","Al sufouh","Al wasl","Arabian Ranches","Arabian Ranches 1","Arabian Ranches 2","Arabian Ranches 3","Arjan","Barsha heights (Tecom)","Bluewaters Island","Bur Dubai","Business Bay","City Walk","Creek Beach","Damac Hills","Deira","Discovery Gardens","Duabi Creek Harbour (DCH)","Duabi Downtown","Duabi Hills Estate (DHE)","Duabi Land","Duabi Marina","Duabi South","Dubai Festival City (DFC)","Dubai International Financial Centre(DIFC)","Dubai Investment Park (DIP)","Dubai Media City","Dubai Science Park","Dubai Silicon Oasis (DSO)","Dubai Sports City","Elan, Tilal Al Ghaf","Emaar Beachfront","Emaar South","Emirates Hills","Emirates Living","IMPZ","International City","Jebel Ali","Jumeirah","Jumeirah Bay Island","Jumeirah Beach Residence (JBR)","Jumeirah Golf Estates (JGE)","Jumeirah Island","Jumeirah Lake Towers (JLT)","Jumeirah Park","Jumeirah Village Circle (JVC)","Jumeirah Village Triangle(JVT)","La Mer","Liwan","Madinat Jumeirah Living (MJL), Umm Suqueim","Majan","Meadows","Meydan","Mina Rashid","Mira","Mira 1","Mira 4","Mira oasis","Mira oasis 1","Mira oasis 2","Mira oasis 3","Mirdif","Mohammad Bin Rashid Al Maktoum (MBR)","Mohammad Bin Zayed Road","Motor City","Mudon","Nad Al Sheba","Nshama Town Square","Old Town","Palm Jumeirah","Port Saeed","Queue Point","Saadiyat Island","Sheikh Zayed Road","Sobha Hartland MBR","The Greens","The Hills","The Lagoons","The Lakes","The Springs","The Valley","The Views","The Villa","The World Islands","Umm Ramool","Umm Suqueim","Villanova","World Trade Centre","Zabeel"],
-            ammenitiesList:["Kindergarten","2 Cafes","3 restaurants","Clinic","Golf Club","Tennis Courts","State-of-the-art Gym","Bali-inspired Pool","Pool Pavilion","Hammocks","Sun Lounge Terraces","Clubhouse","Barbeque Area","Outdoor Wellness Area","Reception service ","Concierge service ","Smart home technology ","Video security ","Common courtyard ","Common garden ","Meeting room ","Gymnasium ","Steam room ","Sauna ","Jacuzzi ","Infinity Pool ","Overflow pool ","Standard pool ","Pet Friendly ","Games room ","Kids club ","Restaurant Retail area","Reception service ","Smart home technology ","Video security ","Common courtyard ","Common garden ","Meeting room ","Gymnasium ","Steam room ","Sauna ","Jacuzzi ","Standard pool ","Pet Friendly ","Games room ","Kids club ","Restaurant Retail area","ROOFTOP SWIMMING POOL","GYMNASIUM","HEALTH CLUB","KIDS’ CLUB & PLAY AREA","18-HOLE CHAMPIONSHIP GOLF COURSE","DUBAI POLO & EQUESTRIAN CLUB","GATED COMMUNITY","LEISURE CENTRE","KIDS' PLAY AREA","Free Chiller","Central A/C","Gym","Children pool","Basement","CCTV cameras","Covered Parking","Children play area","Landmark view","Lobby in building","Mosque / prayer room","Security","Shared pool","Supermarket nearby","Community center","Gym","Covered Parking","Cycling tracks","Children play area","Jogging tracks","Pets allowed","Shared pool","Supermarket nearby","INFINITY SWIMMING POOL","STATE-OF-THE-ART GYM","CIGAR LOUNGE","LIBRARY","MOVIE THEATRE","GOLF SIMULATOR","GAME ROOM","Gymnasium","Children's play area","Children's Play Area","Restaurants","Restaurants","Shopping mall","Shopping Mall","Beach Access","Beach Access","Jogging Tracks","Jogging Tracks","18-HOLE GOLF COURSE","1,450,000 SQM PARKS & OPEN SPACES","DUBAI HILLS PARK","DUBAI HILLS MALL","CONCIERGE SERVICE","Gym","Shared spa","Fine Dining","Private Pool","Fitness Centre","Dubai fountain","Retail Outlets","Covered Parking","Landscaped Garden","Private Beach Access","Waterfront Living","Resort-Style Amenities","Private Beach Access"],
             link_filename:'',
             link_url:'',
             uploadBannerImage:'',
             uploadPropertyImages:[],
             uploadFloorPlanImages:[],
-            communities:[]
+            communities:[],
+            configurations:[{
+                neighbourhoodList : [],
+                ammenitiesList:[]
+            }]
         }
     },
 
@@ -404,7 +418,6 @@ export default {
         this.getData()
     },
     methods:{
-        
         async getData(){
             await this.$axios.$get("properties/all")
             .then(res =>{
@@ -416,20 +429,25 @@ export default {
             .then(res =>{
                 this.communities = res
             }).catch()
+
+            await this.$axios.$get("configurations/all")
+            .then(res =>{
+                this.configurations = res
+            }).catch()
         },
         openImage(val){
             window.open(val)
         },
+        chipColor(val){
+            return val == 'Offplan' ? 'purple' : val == 'Rental' ? 'indigo' : 'pink'
+        },
+        getUserStatusColor(status){
+            if(status == 'Active') return 'border-left: teal solid 9px'
+            else if(status == 'Inactive') return 'border-left: red solid 9px'
+            else return 'border-left: grey solid 9px'
+        },
         getImage(val){
             let image = '/home-vector.png'
-            // if(this.properties.length > 0){
-            //     let abc = this.properties.filter(a => a._id == val)
-            //     if(abc.length > 0){
-            //         if(abc[0].hasOwnProperty('image_url')){
-            //             if(abc[0].image_url != '') image = abc[0].image_url
-            //         }
-            //     }
-            // }
             return val != '' ? val : image
         },
         selectProperty(val){
@@ -570,6 +588,8 @@ export default {
                         value.property_name.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
                         value.community.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
                         value.developer.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
+                        value.property_status.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
+                        value.status_type.toLowerCase().indexOf(s.toLowerCase()) > -1 ||
                         value.property_type.toLowerCase().indexOf(s.toLowerCase()) > -1
                     )
                 })

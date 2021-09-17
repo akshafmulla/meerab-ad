@@ -11,12 +11,12 @@
             </v-row>
             <v-row>
                 <v-col cols="12" sm="12" md="4" xl="3" v-for="(data,index) in agents" :key="index">
-                    <v-card class="pb-5 rounded-xl" flat>
+                    <v-card class="pb-5 rounded-xl" min-height="400" flat>
                         <v-img :src="data.agent_pic" contain height="250"></v-img>
                         <p class="pt-3 text-center px-3 mb-0 font-weight-bold">{{data.agent_name}}</p>
                         <p class="caption mb-1 text-center px-3 font-weight-bold caption">{{data.agent_info.designation}}</p>
                         <div v-for="(item,ind) in data.agent_info.phone_number" :key="ind" class="text-center">
-                            <p class="mb-0 caption blue-grey--text" v-if="item !=''"><v-icon color="indigo" size="20" class="">mdi-phone</v-icon>{{item}}</p>
+                            <p class="mb-0 caption blue-grey--text" v-if="item !=''"><v-icon color="indigo" size="20" class="">mdi-phone</v-icon>&nbsp;{{item}}</p>
                         </div>
                     </v-card>
                 </v-col>
@@ -178,7 +178,9 @@ export default {
         },
     },
     computed:{
-        
+        windowSize(){
+            return this.$vuetify.breakpoint.mobile ? true : false
+        }
     }
 }
 </script>

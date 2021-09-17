@@ -25,18 +25,20 @@
         <div class="grey lighten-4">
             <p class="pt-8 text-center display-1 font-weight-light">OUR TEAM</p>
             <v-container>
-                <v-row align="center" justify="center">
-                    <v-col cols="12" sm="12" md="3" xl="2" v-for="(data,index) in agents" :key="index">
-                        <v-card class="pb-5 rounded-xl" flat min-height="330">
-                            <v-img :src="data.agent_pic" contain height="200"></v-img>
-                            <p class="pt-3 text-center px-3 mb-0 font-weight-bold">{{data.agent_name}}</p>
-                            <p class="caption mb-1 text-center px-3 font-weight-bold caption">{{data.agent_info.designation}}</p>
-                            <div v-for="(item,ind) in data.agent_info.phone_number" :key="ind" class="text-center">
-                                <p class="mb-0 caption blue-grey--text" v-if="item !=''"><v-icon color="indigo" size="20" class="">mdi-phone</v-icon>{{item}}</p>
-                            </div>
-                        </v-card>
-                    </v-col>
-                </v-row>
+                <v-sheet class="mx-auto grey lighten-4" elevation="0">
+                    <v-slide-group cycle class="pa-4 mx-auto" show-arrows>
+                        <v-slide-item v-for="(data,index) in agents" :key="index" class="text-center">
+                            <v-card  class="pb-5 rounded-xl mr-3" min-height="400" flat>
+                                <v-img :src="data.agent_pic" contain :height="windowSize ? '150' : '300'" :width="windowSize ? '160' : '340'"></v-img>
+                                <p class="pt-3 text-center px-3 mb-0 font-weight-bold">{{data.agent_name}}</p>
+                                <p class="caption mb-1 text-center px-3 font-weight-bold caption">{{data.agent_info.designation}}</p>
+                                <div v-for="(item,ind) in data.agent_info.phone_number" :key="ind" class="text-center">
+                                    <p class="mb-0 caption blue-grey--text" v-if="item !=''"><v-icon color="indigo" size="20" class="">mdi-phone</v-icon>&nbsp;{{item}}</p>
+                                </div>
+                            </v-card>
+                        </v-slide-item>
+                    </v-slide-group>
+                </v-sheet>
             </v-container>
         </div>
         <div class="px-sm-4 px-lg-15 pt-5">
