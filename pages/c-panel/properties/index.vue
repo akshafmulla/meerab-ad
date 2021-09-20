@@ -54,12 +54,13 @@
                         <v-card-title class="">
                             <span class="font-weight-bold mt-n4 primary--text">Property Information</span>
                             <v-spacer></v-spacer>
-                            <!-- <v-btn fab x-small @click="toggleEdit = !toggleEdit" :color="!toggleEdit ? 'primary' : 'red'"><v-icon color="white">{{!toggleEdit ? 'mdi-pencil' : 'mdi-close'}}</v-icon></v-btn> -->
+                            <v-btn fab x-small @click="editProperty" class="mr-2 green" v-if="toggleEdit"><v-icon color="white">mdi-check-circle</v-icon></v-btn>
+                            <v-btn fab x-small @click="toggleEdit = !toggleEdit" :color="!toggleEdit ? 'primary' : 'red'" class="mr-2"><v-icon color="white">{{!toggleEdit ? 'mdi-pencil' : 'mdi-close'}}</v-icon></v-btn>
                             <v-btn x-small class="indigo white--text" @click="updatePropertyToBanner(true)" v-if="selectedProject && selectedProject.home_banner_highlight == false">Add to Banner</v-btn>
                             <v-btn x-small class="red white--text" @click="updatePropertyToBanner(false)"  v-else-if="selectedProject && selectedProject.home_banner_highlight == true">Remove from Banner</v-btn>
                         </v-card-title>
                         <v-divider class="mx-5"></v-divider>
-                        <div class="px-3 scroll" v-if="selectedProject" style="max-height:700px;">
+                        <div class="px-3 scroll" v-if="selectedProject && !toggleEdit" style="max-height:700px;">
                             <v-img :src="selectedProject.banner_img" max-height="200"></v-img>
                             <h3 class="primary--text text-center pt-2">{{selectedProject.property_name}} &emsp;</h3>
                             <p class="mb-0 text-center"><v-chip class="indigo white--text" x-small>{{selectedProject.property_type}}</v-chip></p>
@@ -111,6 +112,165 @@
                                     </v-col>
                                 </v-row>
                             </v-container>
+                        </div>
+                        <div v-else-if="selectedProject && toggleEdit" class="px-3 scroll" style="max-height:700px;">
+                            <v-form ref="form">
+                                <v-row class="px-3">
+                                    <v-col cols="12" sm="12" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Property Name <span class="red--text">(Add unique name)</span></p>
+                                        <v-text-field dense outlined v-model="selectedProject.property_name" placeholder="Property Name" :rules="genericRule"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Neighbourhood</p>
+                                        <v-autocomplete :items="configurations[0].neighbourhoodList"  dense outlined v-model="selectedProject.neighbourhood" placeholder="Neighbourhood" :rules="genericRule"></v-autocomplete>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Community</p>
+                                        <v-autocomplete :items="communities" item-text="community_name" item-value="community_name"  dense outlined v-model="selectedProject.community" placeholder="Community"></v-autocomplete>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Developer</p>
+                                        <v-select :items="configurations[0].developerList" dense outlined v-model="selectedProject.developer" placeholder="Developer" :rules="genericRule"></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Starting Price</p>
+                                        <v-text-field dense outlined v-model="selectedProject.starting_price" type="number" placeholder="Starting Price" :rules="genericRule"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Bedroom Options</p>
+                                        <v-select :items="roomsList" multiple dense outlined v-model="selectedProject.rooms" placeholder="Bedroom" :rules="fileRules"></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Property Type</p>
+                                        <v-select :items="propertyTypeList" dense outlined v-model="selectedProject.property_type" placeholder="Property Type" :rules="genericRule"></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Status Type</p>
+                                        <v-select :items="statusTypeList" dense outlined v-model="selectedProject.status_type" placeholder="Status Type" :rules="genericRule"></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Property Status</p>
+                                        <v-select :items="propertyStatusList" dense outlined v-model="selectedProject.property_status" placeholder="Property Status" :rules="genericRule"></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Area Range</p>
+                                        <v-range-slider v-model="range" :max="max" :min="min" hide-details class="align-center">
+                                            <template v-slot:prepend>
+                                                <v-text-field :value="range[0]" class="mt-0 pt-0" hide-details single-line type="number" outlined dense @change="$set(range, 0, $event)"></v-text-field>
+                                            </template>
+                                            <template v-slot:append>
+                                                <v-text-field :value="range[1]" class="mt-0 pt-0" hide-details single-line type="number" outlined dense @change="$set(range, 1, $event)"></v-text-field>
+                                            </template>
+                                        </v-range-slider>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Ammenities</p>
+                                        <v-autocomplete :items="configurations[0].ammenitiesList" multiple dense outlined v-model="selectedProject.ammenities" placeholder="Ammenities" :rules="fileRules"></v-autocomplete>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">3D Property Link</p>
+                                        <v-text-field dense outlined v-model="selectedProject.property_3d_link" placeholder="3D Property Link"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Banner Image <span class="red--text">(Size : 1920px * 768px)</span></p>
+                                        <span v-if="selectedProject.banner_img != ''">
+                                            <v-btn small class="indigo mr-2" dark @click="openImage(selectedProject.banner_img)">Open Banner</v-btn>&nbsp;
+                                        </span>
+                                        <v-file-input outlined dense placeholder="Attach Banner Image" @change="onUploadBannerImage" v-else>
+                                            <template v-slot:selection="{ text }">
+                                                <v-chip small label color="primary" >
+                                                    {{ text }}
+                                                </v-chip>
+                                            </template>
+                                        </v-file-input>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Property Images</p>
+                                        <span v-if="selectedProject.property_pics.length > 0">
+                                            <span v-for="(data,index) in selectedProject.property_pics" :key="index">
+                                                <v-btn small class="pink mr-2" dark @click="openImage(data.link)">Open Images</v-btn>&nbsp;
+                                            </span>
+                                        </span>
+                                        <v-file-input outlined multiple dense placeholder="Attach Multiple Property Image" @change="onUploadPropertyPics" :rules="fileRules" v-else>
+                                            <template v-slot:selection="{ text }">
+                                                <v-chip small label color="primary" >
+                                                    {{ text }}
+                                                </v-chip>
+                                            </template>
+                                        </v-file-input>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Floor Plan</p>
+                                        <span v-if="selectedProject.floor_plan.length > 0">
+                                            <span v-for="(data,index) in selectedProject.floor_plan" :key="index">
+                                                <v-btn small class="blue mr-2" dark @click="openImage(data.link)">Open Images</v-btn>&nbsp;
+                                            </span>
+                                        </span>
+                                        <v-file-input outlined multiple dense placeholder="Attach Multiple Floor Plan Image" @change="onUploadFloorPanPics" v-else>
+                                            <template v-slot:selection="{ text }">
+                                                <v-chip small label color="primary" >
+                                                    {{ text }}
+                                                </v-chip>
+                                            </template>
+                                        </v-file-input>
+                                    </v-col> 
+                                    <v-col cols="12" sm="12" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Overview</p>
+                                        <div v-for="(data,index) in selectedProject.overview" :key="index">
+                                            <v-row>
+                                                <v-col cols="12" sm="12" md="10" class="py-0">
+                                                    <v-text-field dense outlined v-model="data.text" placeholder="Text Line" :rules="genericRule" v-if="data.type == 'text'"></v-text-field>
+                                                    <div v-for="(item,ind) in data.text" :key="ind" v-else>
+                                                        <v-row>
+                                                            <v-col cols="12" sm="12" md="6" class="py-0">
+                                                                <v-text-field dense outlined v-model="item.val" placeholder="Add Pointers" :rules="genericRule"></v-text-field>
+                                                            </v-col>
+                                                            <v-col cols="12" sm="12" md="3" class="py-0">
+                                                                <v-btn class="primary mr-2" x-small fab outlined dark @click="pushNewPointer(index,'overview')"><v-icon>mdi-plus</v-icon></v-btn>
+                                                                <v-btn class="red white--text" x-small fab dark @click="removePointer(index,ind,'overview')"><v-icon>mdi-close</v-icon></v-btn>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </div>
+                                                </v-col>
+                                                <v-col cols="12" sm="12" md="2" class="pb-0 pt-2">
+                                                    <v-btn class="primary mr-2" x-small outlined dark @click="pushNew('text','overview')">Add New Line</v-btn>
+                                                    <v-btn class="indigo darken-1 mr-2" x-small outlined dark @click="pushNew('list','overview')">Add List</v-btn>
+                                                    <v-btn class="red white--text" x-small dark @click="removeNewObject(index,'overview')">Remove</v-btn>
+                                                </v-col>
+                                            </v-row>
+                                        </div>
+                                    </v-col>
+                                    <v-col cols="12" sm="12" class="py-0">
+                                        <p class="caption font-weight-bold primary--text mb-0">Location</p>
+                                        <div v-for="(data,index) in selectedProject.location" :key="index">
+                                            <v-row>
+                                                <v-col cols="12" sm="12" md="10" class="py-0">
+                                                    <v-text-field dense outlined v-model="data.text" placeholder="Text Line" :rules="genericRule" v-if="data.type == 'text'"></v-text-field>
+                                                    <div v-for="(item,ind) in data.text" :key="ind" v-else>
+                                                        <v-row>
+                                                            <v-col cols="12" sm="12" md="6" class="py-0">
+                                                                <v-text-field dense outlined v-model="item.val" placeholder="Add Pointers" :rules="genericRule"></v-text-field>
+                                                            </v-col>
+                                                            <v-col cols="12" sm="12" md="3" class="py-0">
+                                                                <v-btn class="primary mr-2" x-small fab outlined dark @click="pushNewPointer(index,'location')"><v-icon>mdi-plus</v-icon></v-btn>
+                                                                <v-btn class="red white--text" x-small fab dark @click="removePointer(index,ind,'location')"><v-icon>mdi-close</v-icon></v-btn>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </div>
+                                                </v-col>
+                                                <v-col cols="12" sm="12" md="2" class="pb-0 pt-2">
+                                                    <v-btn class="primary mr-2" x-small outlined dark @click="pushNew('text','location')">Add New Line</v-btn>
+                                                    <v-btn class="indigo darken-1 mr-2" x-small outlined dark @click="pushNew('list','location')">Add List</v-btn>
+                                                    <v-btn class="red white--text" x-small dark @click="removeNewObject(index,'location')">Remove</v-btn>
+                                                </v-col>
+                                            </v-row>
+                                        </div>
+                                    </v-col>
+                                    <v-col cols="12" sm="12" class="pt-6 text-center">
+                                        <v-btn dark class="primary" block @click="addProperty" > Save </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-form>
                         </div>
                     </v-card>
                 </v-col>
@@ -439,7 +599,7 @@ export default {
             window.open(val)
         },
         chipColor(val){
-            return val == 'Offplan' ? 'purple' : val == 'Rental' ? 'indigo' : 'pink'
+            return val == 'Offplan' ? 'purple' : val == 'Rental' ? 'indigo' : "pink"
         },
         getUserStatusColor(status){
             if(status == 'Active') return 'border-left: teal solid 9px'
@@ -458,19 +618,39 @@ export default {
                 type: val
             }
             val == 'text' ? obj.text = '' : obj.text = [{val:''}]
-            objName == 'overview' ? this.projects.overview.push(obj) : this.projects.location.push(obj)
+            if(this.toggleEdit){
+                objName == 'overview' ? this.selectedProject.overview.push(obj) : this.selectedProject.location.push(obj)
+            }
+            else{
+                objName == 'overview' ? this.projects.overview.push(obj) : this.projects.location.push(obj)
+            }
         },
         removeNewObject(index,objName){
-            objName == 'overview' ? this.projects.overview.splice(index,1) : this.projects.location.splice(index,1)
+            if(this.toggleEdit){
+                objName == 'overview' ? this.selectedProject.overview.splice(index,1) : this.selectedProject.location.splice(index,1)
+            }
+            else{
+                objName == 'overview' ? this.projects.overview.splice(index,1) : this.projects.location.splice(index,1)
+            }
         },
         pushNewPointer(index,objName){
             let obj = {
                 val : ''
             }
-            objName == 'overview' ? this.projects.overview[index].text.push(obj) : this.projects.location[index].text.push(obj)
+            if(this.toggleEdit){
+                objName == 'overview' ? this.selectedProject.overview[index].text.push(obj) : this.selectedProject.location[index].text.push(obj)
+            }
+            else{
+                objName == 'overview' ? this.projects.overview[index].text.push(obj) : this.projects.location[index].text.push(obj)
+            }
         },
         removePointer(index,ind,objName){
-            objName == 'overview' ? this.projects.overview[index].text.splice(ind,1) : this.projects.location[index].text.splice(ind,1)
+            if(this.toggleEdit){
+                objName == 'overview' ? this.selectedProject.overview[index].text.splice(ind,1) : this.selectedProject.location[index].text.splice(ind,1)
+            }
+            else{
+                objName == 'overview' ? this.projects.overview[index].text.splice(ind,1) : this.projects.location[index].text.splice(ind,1)
+            }
         },
         async addProperty(){
             if(this.$refs.form.validate()){
@@ -491,9 +671,17 @@ export default {
                 }).catch(e => console.log(e))
             }
         },
-        updatePropertyToBanner(flag){
+        async editProperty(){
+            this.selectedProject.area = this.range
+            await this.$axios.$put('properties/update/'+this.selectedProject._id, this.selectedProject)
+            .then(async res=>{
+                this.toggleEdit = false
+                console.log(res)
+            }).catch(e => console.log(e))
+        },
+        async updatePropertyToBanner(flag){
             this.selectedProject.home_banner_highlight = flag
-            this.$axios.$put('properties/update/'+this.selectedProject._id, this.selectedProject)
+            await this.$axios.$put('properties/update/'+this.selectedProject._id, this.selectedProject)
             .then(async res=>{
                 console.log(res)
             }).catch(e => console.log(e))
@@ -521,8 +709,16 @@ export default {
                     filename:this.link_filename,
                     time: new Date()
                 }
-                this.projects.banner_img = this.link_url
-                this.projects.property_pics.push(attach)
+
+                if(this.toggleEdit){
+                    this.selectedProject.banner_img = this.link_url
+                    this.selectedProject.property_pics.push(attach)
+                }
+                else{
+                    this.projects.banner_img = this.link_url
+                    this.projects.property_pics.push(attach)
+                }
+                
             }
         },
         async attachPropertyImages(){
@@ -540,7 +736,12 @@ export default {
                         filename:this.link_filename,
                         time: new Date()
                     }
-                    this.projects.property_pics.push(attach)
+                    if(this.toggleEdit){
+                        this.selectedProject.property_pics.push(attach)
+                    }
+                    else{
+                        this.projects.property_pics.push(attach)
+                    }
                 }
             }
         },
@@ -558,7 +759,12 @@ export default {
                         filename:this.link_filename,
                         time: new Date()
                     }
-                    this.projects.floor_plan.push(attach)
+                    if(this.toggleEdit){
+                        this.selectedProject.floor_plan.push(attach)
+                    }
+                    else{
+                        this.projects.floor_plan.push(attach)
+                    }
                 }
             }
         },
