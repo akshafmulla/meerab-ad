@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn @click="paypal">buy</v-btn>
+        Success
     </div>
 </template>
 
@@ -16,10 +16,7 @@ export default {
     },
     methods:{
         paypal(){
-            this.$axios.post('/paypal/pay')
-            .then(res =>{
-                console.log(res)
-            }).catch()
+            
         }
     },
     computed:{
