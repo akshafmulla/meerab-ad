@@ -1,11 +1,70 @@
 <template>
-    <div>
+    <div class="grey lighten-4">
         <v-img :src="property.banner_img" cover height="500"></v-img>
-        <v-container v-if="property">
-            <p class="pt-5 text-center primary--text text-h4 mb-4">{{property.property_name}}</p>
+            <v-layout column align-center justify-center :class="windowSize ? '' : ''" >
+                <v-card flat color="white" class="white pa-4" :class="windowSize ? '' : 'margin'" >
+                    <h1 class="primary--text">{{property.property_name}}</h1>
+                    <p class="mb-5 caption"><v-icon class="mt-n2">mdi-map-marker-radius</v-icon>&nbsp;{{property.community}}</p>
+                    <v-divider></v-divider>
+                    <v-row class="font-weight-bold caption">
+                        <v-col cols="6" sm="6" class="">
+                            <p class="mb-0 primary--text"><v-icon color="primary">mdi-cash</v-icon>&nbsp; Starting Price</p>
+                        </v-col>
+                        <v-col cols="6" sm="6" class="text-right">
+                            <p class="mb-0">AED &nbsp;{{property.starting_price | amountFormatter}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+                    <v-row class="font-weight-bold caption">
+                        <v-col cols="6" sm="6" class="">
+                            <p class="mb-0 primary--text"><v-icon color="primary">mdi-label-multiple-outline</v-icon>&nbsp; Community</p>
+                        </v-col>
+                        <v-col cols="6" sm="6" class="text-right">
+                            <p class="mb-0">{{property.community}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+                    <v-row class="font-weight-bold caption">
+                        <v-col cols="6" sm="6" class="">
+                            <p class="mb-0 primary--text"><v-icon color="primary">mdi-bed</v-icon>&nbsp; Bedrooms</p>
+                        </v-col>
+                        <v-col cols="6" sm="6" class="text-right">
+                            <p class="mb-0"><span v-for="(item, i) in property.rooms" :key="i">{{item}}<span v-if="i < property.rooms.length - 1">,&nbsp;</span> </span> Rooms</p>
+                        </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+                    <v-row class="font-weight-bold caption">
+                        <v-col cols="6" sm="6" class="">
+                            <p class="mb-0 primary--text"><v-icon color="primary">mdi-warehouse</v-icon>&nbsp; Type</p>
+                        </v-col>
+                        <v-col cols="6" sm="6" class="text-right">
+                            <p class="mb-0">{{property.property_type}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+                    <v-row class="font-weight-bold caption">
+                        <v-col cols="6" sm="6" class="">
+                            <p class="mb-0 primary--text"><v-icon color="primary">mdi-chart-areaspline-variant</v-icon>&nbsp; Area</p>
+                        </v-col>
+                        <v-col cols="6" sm="6" class="text-right">
+                            <p class="mb-0">{{property.area[0]}} - {{property.area[1]}} Sq. Ft</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="font-weight-bold caption">
+                        <v-col cols="6" sm="6" class="text-center">
+                            <v-btn class="indigo" depressed :disabled="true">Book Now</v-btn>
+                        </v-col>
+                        <v-col cols="6" sm="6" class="text-center">
+                            <v-btn class="primary" dark href="#contact-us">Register Interest</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card>
+            </v-layout>
+        <v-container v-if="property" class="white mt-4">
+            <!-- <p class="pt-5 text-center primary--text text-h4 mb-4">{{property.property_name}}</p>
             <p class="mb-0 text-center"><v-chip class="indigo white--text" x-small>{{property.property_type}}</v-chip></p>
             <p class="mb-1  text-center">{{property.community}} by {{property.developer}}</p>
-            <p class=" text-center"><v-icon class="mt-n1" color="primary" size="15">mdi-warehouse</v-icon>&nbsp;<span v-for="(item, i) in property.rooms" :key="i">{{item}}<span v-if="i < property.rooms.length - 1">,&nbsp;</span> </span> Rooms&emsp;&emsp;<v-icon color="green" size="15" class="mt-n1">mdi-cash</v-icon>&nbsp;Starting {{property.starting_price | amountFormatter}} AED</p>
+            <p class=" text-center"><v-icon class="mt-n1" color="primary" size="15">mdi-warehouse</v-icon>&nbsp;<span v-for="(item, i) in property.rooms" :key="i">{{item}}<span v-if="i < property.rooms.length - 1">,&nbsp;</span> </span> Rooms&emsp;&emsp;<v-icon color="green" size="15" class="mt-n1">mdi-cash</v-icon>&nbsp;Starting {{property.starting_price | amountFormatter}} AED</p> -->
             <h4 class="pl-3 blue-grey--text">Overview</h4>
             <v-row class="pl-3 " v-for="(data,index) in property.overview" :key="index">
                 <v-col cols="12" sm="12" md="12" class="pb-0">    
@@ -54,7 +113,7 @@
             </v-container>
             <p class="pt-5 text-center display-1 font-weight-light">CONTACT US</p>
             <v-layout column align-center justify-center>
-                <v-row justify="center" align="center">
+                <v-row justify="center" align="center" id="contact-us">
                     <v-col cols="12" sm="12" >
                         <ContactUS />
                     </v-col>
@@ -98,7 +157,8 @@ export default {
                 rooms:[],
                 banner_img:'',
                 property_details:{},
-                property_pics:[]
+                property_pics:[],
+                area:[]
             },
             dialog_image:''
         }
@@ -126,9 +186,16 @@ export default {
         }
     },
     computed:{
-        createCarousal(){
-
-        }
+        windowSize(){
+            return this.$vuetify.breakpoint.mobile ? true : false
+        },
+        
     }
 }
 </script>
+
+<style>
+.margin{
+    margin-top : -280px;
+}
+</style>

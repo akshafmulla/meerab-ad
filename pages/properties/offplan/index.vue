@@ -15,7 +15,7 @@
                             </v-col>
                             <v-col cols="12" sm='12' md="6" class="py-0">
                                 <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-shield-home-outline</v-icon>&emsp;{{data.developer}}</p>
-                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-warehouse</v-icon>&emsp;<span v-for="(item, i) in data.rooms" :key="i">{{item}}<span v-if="i < data.rooms.length - 1">,&nbsp;</span> </span> Rooms</p>
+                                <p class="mb-1 caption"><v-icon size="18" class="mt-n1" color="primary">mdi-bed</v-icon>&emsp;<span v-for="(item, i) in data.rooms" :key="i">{{item}}<span v-if="i < data.rooms.length - 1">,&nbsp;</span> </span> Rooms</p>
                             </v-col>
                         </v-row>
                     </v-card>

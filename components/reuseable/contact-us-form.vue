@@ -87,7 +87,7 @@ export default {
                     eMessage: 'Hey,<br/><br/>A new Lead has been received on www.meerabproperties.com.PFB details:<br/><br/>Name : <b>'+ this.contact.first_name+ ' ' + this.contact.last_name+ '</b><br/><br/>Email : <b>'+ this.contact.email+ '</b><br/><br/>Contact No. : <b>'+ this.contact.mobile+'</b><br/><br/>Address : <b>'+ this.contact.address+'</b><br/><br/>Link : <b>'+ url+'</b><br/><br/>Thank You for your time. Have a great day ahead.<br/><br/>Regards,<br/>HR Direct'
                 }
 
-                console.log(emailBody)
+                // console.log(emailBody)
                 this.$axios.$post('properties/send-email/', emailBody).then(res=>{
                     // this.snack = true
                     // this.snackText = 'Details have been sent! We will reach out to you soon!'
