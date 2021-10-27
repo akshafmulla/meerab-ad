@@ -15,12 +15,7 @@ export default {
 
     },
     methods:{
-        paypal(){
-            this.$axios.post('/paypal/pay',{})
-            .then(res =>{
-                console.log(res)
-            }).catch()
-        }
+        
     },
     computed:{
         

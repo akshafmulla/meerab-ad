@@ -74,5 +74,6 @@ module.exports = {
     },
     server: {
        port: 5501,
-    }
+    },
+    telemetry:false
 }

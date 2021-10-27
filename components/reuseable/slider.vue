@@ -15,7 +15,7 @@
                         <v-btn class="rounded-lg px-3 mx-2" elevation="0" :value="4" text >Short-Term</v-btn>
                         <v-btn class="rounded-lg px-3 mx-2" elevation="0" :value="5" text >Find Agents</v-btn>
                     </v-btn-toggle>
-                    <v-text-field class="mt-3 rounded-lg" placeholder="Search here...." outlined dense solo flat prepend-inner-icon="mdi-magnify"></v-text-field>
+                    <v-autocomplete :items="configuration[0].neighbourhoodList" multiple class="mt-3 rounded-lg" placeholder="Search here...." outlined dense solo flat prepend-inner-icon="mdi-magnify" v-if="configuration.length > 0"></v-autocomplete>
                     <p class="mb-0 text-right mt-n2"><v-btn small>search</v-btn></p>
                 </v-card>
             </v-layout>
@@ -27,6 +27,7 @@
 
 export default {
     // layout:'dashboard',
+    props:['configuration'],
     data(){
         return{
             toggle_multiple:1,

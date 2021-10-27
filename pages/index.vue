@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <Slider />
+    <Slider :configuration="configuration" />
     <TravelPackage />
     <div class="grey lighten-4 pt-5">
       <p class="text-center display-1 font-weight-light">OFFPLAN PROPERTIES</p>
@@ -41,19 +41,38 @@ import ContactUSAdress from '~/components/reuseable/contact-us-address'
 export default {
     data(){
       return {
+        configuration:[
+          // {
+          //   neighbourhoodList:[],
+          //   ammenitiesList:[],
+          //   developerList:[]
+          // }
+        ]
       } 
     },
     async asyncData({app, store}){
     },
+    mounted(){
+      this.getData()
+    },
+    methods:{
+      async getData(){
+        await this.$axios.$get("configurations/all")
+        .then(res =>{
+          this.configuration = res
+          console.log(res)
+        }).catch()
+      },
+    },
     components: {
-        Slider,
-        TravelPackage,
-        InvestWithUs,
-        Partners,
-        OffplanSlider,
-        CommunitySlider,
-        ContactUS,
-        ContactUSAdress,
+      Slider,
+      TravelPackage,
+      InvestWithUs,
+      Partners,
+      OffplanSlider,
+      CommunitySlider,
+      ContactUS,
+      ContactUSAdress,
     }
 }
 </script>
