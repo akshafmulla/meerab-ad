@@ -52,7 +52,7 @@
                 </v-row>
                 <v-row class="font-weight-bold caption">
                     <v-col cols="6" sm="5" class="text-center">
-                        <v-btn class="indigo" @click="paypal()" depressed :disabled="true">Book Now</v-btn>
+                        <v-btn class="indigo" @click="paypal()" dark>Book Now</v-btn>
                     </v-col>
                     <v-col cols="6" sm="7" class="text-left">
                         <v-btn class="primary" dark href="#contact-us">Register Interest</v-btn>
