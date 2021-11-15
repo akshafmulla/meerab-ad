@@ -5,6 +5,9 @@
                 <v-col cols="12" sm="4" class="">
                     <h3 class="headline font-weight-light primary--text">CONFIGURATION <span class="display-1 font-weight-bold primary--text">&nbsp;CENTRAL</span></h3>
                 </v-col>
+                <v-col class="text-right">
+                    <v-btn small class="primary" dark @click="openBulkEmailDialog = true">Send Bulk Email</v-btn>
+                </v-col>
             </v-row>
             <v-row>
                 <v-col cols="12" sm="12" md="6">
@@ -57,6 +60,49 @@
                 </v-col>
             </v-row>
         </v-container>
+        <!-- Email Dialog -->
+        <v-dialog v-model="openBulkEmailDialog" max-width="900px">
+            <v-card class="rounded-xl" flat style="overflow-x : hidden" min-height="400">
+                <v-toolbar dark color="primary" >
+                    <v-toolbar-title>Send Bulk Email</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn icon dark @click="openBulkEmailDialog = false">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-container>
+                    <v-form ref="form">
+                        <v-row>
+                            <v-col cols="3" class="my-auto">
+                                Load CSV
+                            </v-col>
+                            <v-col cols="9" class="pt-1">
+                                <v-file-input outlined dense label="Upload CSV file here" @change="loadCSV" show-size></v-file-input>
+                            </v-col>
+
+                            <v-col cols="3" class="my-auto">
+                                Subject
+                            </v-col>
+                            <v-col cols="9" class="pt-1">
+                                <v-text-field outlined dense class="" placeholder="Enter Subject for Email" v-model="subject"></v-text-field>
+                            </v-col>
+
+                            <v-col cols="3" class="my-auto">
+                                Message
+                            </v-col>
+                            <v-col cols="9" class="pt-1">
+                                <v-textarea outlined dense class="" placeholder="Enter Email body" v-model="message"></v-textarea>
+                            </v-col>
+                        </v-row>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="grey" text @click="dialog = false">Close</v-btn>
+                            <v-btn color="blue darken-1" text @click="processCSV()">Send Email</v-btn>
+                        </v-card-actions>
+                    </v-form>
+                </v-container>
+            </v-card>
+        </v-dialog>
         <!-- Snackbar -->
         <v-snackbar v-model="snack" :timeout="3000" :color="snackColor" >
             {{ snackText }}
@@ -68,6 +114,8 @@
 </template>
 
 <script>
+import papaparse from 'papaparse';
+
 export default {
     data(){
         return{
@@ -78,6 +126,10 @@ export default {
             snack:false,
             snackText:'',
             snackColor:'',
+            openBulkEmailDialog: false,
+            csvUpload:'',
+            subject:'',
+            message:''
         }
     },
     mounted(){
@@ -118,7 +170,46 @@ export default {
                 this.snackColor = "success"
                 this.reset()
             }).catch()
-        }
+        },
+        loadCSV(event){
+            this.csvUpload = event;
+        },
+        processCSV() {
+            
+            let subject = this.subject
+            let message = this.message
+            
+            var eMessage = function(name) {
+                if (name) {
+                    return `Dear ${name},<br><br>`+ message 
+                }
+            };
+
+            papaparse.parse(this.csvUpload, {
+                complete: function(results) {
+                    this.data = results.data
+                    for (let index = 1; index < this.data.length; index++) {
+                        if(this.data[index].length > 1){
+                            let emailBody = {}
+                            let temp = this.data[index]
+                            if(temp[0] != ''){
+                                abc.hr_email = 'leads@meerabproperties.com'
+                                emailBody.email = temp[0]
+                                emailBody.subjectMsg = subject 
+                                emailBody.eMessage = eMessage(temp[1])
+                                
+                                app.__vue__.$root.$axios.$post('/properties/send-email', emailBody)
+                                .then(res => {})
+                                .catch(err => console.log(err)) 
+                            }
+                        }                      
+                    }                  
+                }
+            })
+            this.snack = true
+            this.snackText = 'All Emails sent successfully'
+            this.snackColor="teal"
+        },
     },
     computed:{
         accordionList(){
